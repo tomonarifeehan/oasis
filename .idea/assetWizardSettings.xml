@@ -33,7 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_expand" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\Tomonari\Desktop\ic_new_report.png" />
+                                      <entry key="outputName" value="ic_new_report" />
                                     </map>
                                   </option>
                                 </PersistentState>
