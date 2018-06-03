@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "686607118169",
+    "firebase_url": "https://oasis-9ff9b.firebaseio.com",
+    "project_id": "oasis-9ff9b",
+    "storage_bucket": "oasis-9ff9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686607118169:android:0045cbda354dba39",
+        "android_client_info": {
+          "package_name": "com.example.tomonari.oasis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686607118169-iskp52qnnvvtbsrmatgu9612pehhssuu.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "686607118169-iskp52qnnvvtbsrmatgu9612pehhssuu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhhzOnjYuLyFfFakxDxE2SjquMcPCFW3U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
