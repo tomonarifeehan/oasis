@@ -11,10 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegPasswordActivity extends AppCompatActivity implements View.OnClickListener {
     User user;
@@ -56,7 +58,6 @@ public class RegPasswordActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
                         if (task.isSuccessful()){
                             Log.d(TAG, "onComplete: AuthState: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
                             //Toast feedback.
@@ -64,10 +65,30 @@ public class RegPasswordActivity extends AppCompatActivity implements View.OnCli
                                     Toast.LENGTH_LONG).show();
                             //Send verification email.
                             sendVerificationEmail();
-                            //Sign out new user.
-                            FirebaseAuth.getInstance().signOut();
-                            //Redirect the new user to the login screen.
-                            redirectLoginScreen();
+
+                            user.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            //Add User to Database
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            FirebaseAuth.getInstance().signOut();
+                                            //Redirect the user to the login screen
+                                            redirectLoginScreen();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(RegPasswordActivity.this, "something went wrong.", Toast.LENGTH_SHORT).show();
+                                    FirebaseAuth.getInstance().signOut();
+
+                                    //Redirect the user to the login screen
+                                    redirectLoginScreen();
+                                }
+                            });
                         }
                         if (!task.isSuccessful()) {
                             //Toast feedback.

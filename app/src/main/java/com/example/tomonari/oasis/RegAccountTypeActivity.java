@@ -22,8 +22,7 @@ public class RegAccountTypeActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_reg_account_type);
 
         //Buttons
-        Button cancelButton = (Button) findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(this);
+        findViewById(R.id.cancel_button).setOnClickListener(this);
         findViewById(R.id.reg_button_continue).setOnClickListener(this);
 
         //Spinner

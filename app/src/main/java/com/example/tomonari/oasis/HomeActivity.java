@@ -16,65 +16,32 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton fabLogout;
     private FloatingActionButton fabAdmin;
 
-    /**
-     * OnCreate method required to load activity and loads everything that
-     * is needed for the page while setting the view.
-     *
-     *
-     * @param savedInstanceState Takes in a bundle that may contain an object
-     *                           for use within this class
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        //noinspection ChainedMethodCall
-//        user = (User) getIntent().getSerializableExtra("USER");
+        user = (User) getIntent().getSerializableExtra("USER");
 
-        dataSetup();
-        uiSetup();
-    }
-
-    /**
-     * OnClick method that will listen for clicks on the
-     * view.
-     *
-     *
-     * @param v Takes in a view.
-     */
-    @Override
-    public void onClick(View v) {
-    }
-
-    /**
-     * Sets up user information to be displayed
-     *
-     */
-    private void dataSetup() {
         TextView nameField = (TextView) findViewById(R.id.name_field);
         TextView emailField = (TextView) findViewById(R.id.email_field);
         TextView accountTypeField = (TextView) findViewById(R.id.account_field);
 
-//        nameField.setText("Name:  " + user.getName());
-//        emailField.setText("Email:  " + user.getEmail());
-        //noinspection ChainedMethodCall
-//        accountTypeField.setText("Account Type:  " + user.getAccountType().toString());
+        nameField.setText("Name:  " + user.getName());
+        emailField.setText("Email:  " + user.getEmail());
+        accountTypeField.setText("Account Type:  " + user.getAccountType().toString());
+
+        uiSetup();
     }
 
-    /**
-     * Sets up all of the necessary ui for this screen.
-     *
-     */
+    @Override
+    public void onClick(View v) {
+    }
+
     private void uiSetup() {
         fabSetup();
         bottomBar();
-
     }
 
-    /**
-     * Fab setup
-     *
-     */
     private void fabSetup() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);

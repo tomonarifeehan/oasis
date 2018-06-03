@@ -26,8 +26,7 @@ public class RegNameActivity extends AppCompatActivity implements View.OnClickLi
         nameField = (EditText) findViewById(R.id.reg_text_name);
 
         //Buttons
-        Button cancelButton = (Button) findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(this);
+        findViewById(R.id.cancel_button).setOnClickListener(this);
         findViewById(R.id.reg_button_continue).setOnClickListener(this);
     }
 

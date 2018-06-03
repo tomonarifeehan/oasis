@@ -25,9 +25,8 @@ public class RegEmailActivity extends AppCompatActivity implements View.OnClickL
         //EditText
         emailField = (EditText) findViewById(R.id.reg_text_email);
 
-        //Button
-        Button cancelButton = (Button) findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(this);
+        //Buttons
+        findViewById(R.id.cancel_button).setOnClickListener(this);
         findViewById(R.id.reg_button_continue).setOnClickListener(this);
     }
 

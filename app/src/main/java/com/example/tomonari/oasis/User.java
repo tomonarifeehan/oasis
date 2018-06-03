@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-@SuppressWarnings({"ClassWithTooManyDependents", "JavaDoc"})
 public class User implements Serializable {
     public static final List<AccountType> legalClass = Arrays.asList(AccountType.values());
     private String name;
@@ -42,33 +41,38 @@ public class User implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getEmail() {
         return email;
     }
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getPassword() {
         return password;
     }
     public void setPassword(String password) {
         this.password = password;
     }
+
     public AccountType getAccountType() {
         return accountType;
     }
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
+
     public String getUid() {
         return this.uid;
     }
     public void setUid(String uid) {
         this.uid = uid;
     }
+
     @Override
     public String toString() {
-        return "User{" +
+        return "User {" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
