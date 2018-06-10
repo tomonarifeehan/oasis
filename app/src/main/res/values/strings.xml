@@ -71,5 +71,9 @@
 
     <!-- Firebase Database Nodes -->
     <string name="dbnode_users">users</string>
+    <string name="dbnode_source_reports">source_reports</string>
+    <string name="dbnode_purity_reports">purity_reports</string>
+    <string name="dbnode_source_count">source_count</string>
+    <string name="dbnode_purity_count">purity_count</string>
 
 </resources>
