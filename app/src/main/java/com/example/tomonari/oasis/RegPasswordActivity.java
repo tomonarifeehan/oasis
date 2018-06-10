@@ -69,7 +69,7 @@ public class RegPasswordActivity extends AppCompatActivity implements View.OnCli
                             user.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             //Add User to Database
                             FirebaseDatabase.getInstance().getReference()
-                                    .child("users")
+                                    .child(getString(R.string.dbnode_users))
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {

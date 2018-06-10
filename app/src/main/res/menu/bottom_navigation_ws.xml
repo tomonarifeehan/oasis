@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="UnusedResources">
+    <item
+        android:id="@+id/action_my_reports"
+        android:enabled="true"
+        android:title="@string/my_reports"
+        android:icon="@drawable/ic_my_reports"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_empty"
+        android:enabled="true"
+        android:title="Historical Report"
+        android:icon="@drawable/ic_historical_report"
+        app:showAsAction="ifRoom"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/action_all_reports"
+        android:enabled="true"
+        android:title="@string/all_reports"
+        android:icon="@drawable/ic_all_reports"
+        app:showAsAction="always" />
+</menu>

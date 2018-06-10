@@ -69,6 +69,7 @@
     <string name="title_activity_ban_user">Ban User Activity</string>
     <string name="title_activity_remove_report">Remove Report Activity</string>
 
+    <!-- Firebase Database Nodes -->
+    <string name="dbnode_users">users</string>
 
-    <!-- Strings related to home screen -->
 </resources>

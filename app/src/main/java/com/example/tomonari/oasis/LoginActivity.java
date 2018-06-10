@@ -32,8 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private static final String TAG = "EmailPassword";
     private TextView mStatusTextView;
-    private EditText emailField;
-    private EditText passwordField;
+    private EditText emailField, passwordField;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
