@@ -7,38 +7,33 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
-import java.util.Random;
 
 public class NewReportActivity extends AppCompatActivity implements View.OnClickListener {
     User user = new User();
-    private Spinner waterType;
-    private Spinner waterCondition;
-    private Spinner overallCondition;
-    private EditText waterLocationLatitude;
-    private EditText waterLocationLongitude;
-    private EditText waterVirusPPM;
-    private EditText waterContaminantPPM;
-    private TextView reportTitle;
-    private TextView contaminantTitle;
-    private TextView waterTypeAndVirusPPMTitle;
-    private TextView waterConditionAndOverallConditionTitle;
+    private Spinner waterType, waterCondition, overallCondition;
+    private EditText waterLocationLatitude, waterLocationLongitude, waterVirusPPM, waterContaminantPPM;
+    private TextView reportTitle, contaminantTitle, waterTypeAndVirusPPMTitle, waterConditionAndOverallConditionTitle;
     private Switch switchButton;
+    int wsCount, wpCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +61,9 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
         contaminantTitle = (TextView) findViewById(R.id.title_contaminant_ppm);
         waterContaminantPPM = (EditText) findViewById(R.id.text_contaminant_ppm);
 
-        SpinnerAdapter adaptWaterCondition = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                WaterSourceReport.legalConditions);
-        SpinnerAdapter adaptWaterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                WaterSourceReport.legalTypes);
-        SpinnerAdapter adaptOverallCondition = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
-                WaterPurityReport.legalOverallConditions);
+        SpinnerAdapter adaptWaterCondition = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, WaterSourceReport.legalConditions);
+        SpinnerAdapter adaptWaterType = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, WaterSourceReport.legalTypes);
+        SpinnerAdapter adaptOverallCondition = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, WaterPurityReport.legalOverallConditions);
 
         waterType.setAdapter(adaptWaterType);
         waterCondition.setAdapter(adaptWaterCondition);
@@ -123,7 +115,6 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
 
                     contaminantTitle.setVisibility(View.INVISIBLE);
                     waterContaminantPPM.setVisibility(View.INVISIBLE);
-
                 }
             }
         });
@@ -147,17 +138,18 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
     public void addWaterSourceReport(WaterSourceReport sourceReport) {
         FirebaseDatabase.getInstance().getReference()
                 .child(getString(R.string.dbnode_source_reports))
-                .child(Integer.toString(sourceReport.getReportNumber()))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Integer.toString(getWaterSourceCount() + 1))
                 .setValue(sourceReport)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        Count c = new Count(getWaterSourceCount() + 1, getWaterPurityCount(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        updateWaterSourceCount(c);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
             }
         });
     }
@@ -165,17 +157,18 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
     public void addWaterPurityReport(WaterPurityReport purityReport) {
         FirebaseDatabase.getInstance().getReference()
                 .child(getString(R.string.dbnode_purity_reports))
-                .child(Integer.toString(purityReport.getReportNumber()))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Integer.toString(getWaterPurityCount() + 1))
                 .setValue(purityReport)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        Count c = new Count(getWaterSourceCount(), getWaterPurityCount() + 1, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        updateWaterPurityCount(c);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
             }
         });
     }
@@ -194,7 +187,6 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
     }
 
     private WaterSourceReport compileWaterSourceReport() {
-
         int reportNumber = getWaterSourceCount() + 1;
         Date currentDate = new Date();
         String location = waterLocationLatitude.getText().toString() + "," + waterLocationLongitude.getText().toString();
@@ -207,12 +199,75 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
     }
 
     private int getWaterSourceCount() {
-        Random r = new Random();
-        return r.nextInt(1000);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query1 = reference.child("count")
+                .orderByKey()
+                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Count count = (Count) singleSnapshot.getValue(Count.class);
+                    wsCount = count.getSource_count();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        return wsCount;
     }
 
     private int getWaterPurityCount() {
-        Random r = new Random();
-        return r.nextInt(1000);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query1 = reference.child("count")
+                .orderByKey()
+                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+                    Count count = (Count) singleSnapshot.getValue(Count.class);
+                    wpCount = count.getPurity_count();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        return wpCount;
+    }
+
+    private void updateWaterSourceCount(Count count) {
+        FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.dbnode_count))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(count)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+    }
+
+    private void updateWaterPurityCount(Count count) {
+        FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.dbnode_count))
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(count)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
+
     }
 }

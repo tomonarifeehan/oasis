@@ -89,6 +89,21 @@ public class RegPasswordActivity extends AppCompatActivity implements View.OnCli
                                     redirectLoginScreen();
                                 }
                             });
+
+                            Count initialReportCount = new Count(0, 0, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child(getString(R.string.dbnode_count))
+                                    .child(initialReportCount.getUid())
+                                    .setValue(initialReportCount)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                }
+                            });
                         }
                         if (!task.isSuccessful()) {
                             //Toast feedback.
