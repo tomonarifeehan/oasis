@@ -141,8 +141,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //this loop will return a single result
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     Log.d(TAG, "onDataChange: (QUERY METHOD 1) found user: "
                             + singleSnapshot.getValue(User.class).toString());
