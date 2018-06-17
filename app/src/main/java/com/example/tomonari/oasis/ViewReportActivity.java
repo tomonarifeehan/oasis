@@ -45,6 +45,8 @@ public class ViewReportActivity extends AppCompatActivity {
     private List<WaterPurityReport> purityReportList = new ArrayList<>();
     private List<String> sourceReportTitles = new ArrayList<>();
     private List<String> purityReportTitles = new ArrayList<>();
+    private List<String> sourceReportNames = new ArrayList<>();
+    private List<String> purityReportNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,7 @@ public class ViewReportActivity extends AppCompatActivity {
         spinnerSetup();
         listViewSetup();
         bottomNav();
-        sourceReportTitles = new ArrayList<>();
-        purityReportList = new ArrayList<>();
+        clearReportLists();
         getMySourceReports();
     }
 
@@ -87,7 +88,7 @@ public class ViewReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (viewingOptionSpinner.getSelectedItem().toString() == "Water Source Reports") {
-                    sourceReportTitles.clear();
+                    clearReportLists();
                     int tabId = getSelectedItem(bottomNav);
                     if (tabId == R.id.action_my_reports) {
                         getMySourceReports();
@@ -95,7 +96,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         getAllSourceReports();
                     }
                 } else if (viewingOptionSpinner.getSelectedItem().toString() == "Water Purity Reports") {
-                    purityReportTitles.clear();
+                    clearReportLists();
                     int tabId = getSelectedItem(bottomNav);
                     if (tabId == R.id.action_my_reports) {
                         getMyPurityReports();
@@ -125,8 +126,10 @@ public class ViewReportActivity extends AppCompatActivity {
                             case R.id.action_all_reports:
                                 Toast.makeText(ViewReportActivity.this, "All Reports",
                                         Toast.LENGTH_SHORT).show();
-                                sourceReportTitles.clear();
-                                getAllSourceReports();
+                                clearReportLists();
+                                if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
+                                    getAllSourceReports();
+                                }
                                 viewingOptionSpinner.setSelection(0);
                                 break;
                             case R.id.action_empty:
@@ -136,8 +139,10 @@ public class ViewReportActivity extends AppCompatActivity {
                             case R.id.action_my_reports:
                                 Toast.makeText(ViewReportActivity.this, "My Reports",
                                         Toast.LENGTH_SHORT).show();
-                                sourceReportTitles.clear();
-                                getMySourceReports();
+                                clearReportLists();
+                                if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
+                                    getMySourceReports();
+                                }
                                 viewingOptionSpinner.setSelection(0);
                                 break;
                             default:
@@ -149,11 +154,12 @@ public class ViewReportActivity extends AppCompatActivity {
     }
 
     public void getMySourceReports() {
+        clearReportLists();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query1 = reference.child("source_reports")
+        Query query = reference.child("source_reports")
                 .orderByKey()
                 .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
@@ -161,6 +167,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         WaterSourceReport wsReport = (WaterSourceReport) snap.getValue(WaterSourceReport.class);
                         sourceReportList.add(wsReport);
                         sourceReportTitles.add("" + wsReport.getReportNumber());
+                        sourceReportNames.add("" + wsReport.getSubmittedBy());
 
                         ListAdapter adapter = new ArrayAdapter<String>(
                                 ViewReportActivity.this, android.R.layout.simple_list_item_2,
@@ -171,7 +178,9 @@ public class ViewReportActivity extends AppCompatActivity {
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
                                 text1.setText("Water Source Report");
-                                text2.setText("Report Number: " + sourceReportTitles.get(position));
+                                text2.setText("Report Number: " + sourceReportTitles.get(position)
+                                        + "                        Submitted By: " + sourceReportNames.get(position)
+                                );
                                 return view;
                             }
                         };
@@ -185,11 +194,13 @@ public class ViewReportActivity extends AppCompatActivity {
         });
     }
 
-    public void getMyPurityReports() {DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query1 = reference.child("purity_reports")
+    public void getMyPurityReports() {
+        clearReportLists();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("purity_reports")
                 .orderByKey()
                 .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
@@ -197,6 +208,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         WaterPurityReport wpReport = (WaterPurityReport) snap.getValue(WaterPurityReport.class);
                         purityReportList.add(wpReport);
                         purityReportTitles.add("" + wpReport.getReportNumber());
+                        purityReportNames.add("" + wpReport.getSubmittedBy());
 
                         ListAdapter adapter = new ArrayAdapter<String>(
                                 ViewReportActivity.this, android.R.layout.simple_list_item_2,
@@ -207,7 +219,9 @@ public class ViewReportActivity extends AppCompatActivity {
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
                                 text1.setText("Water Purity Report");
-                                text2.setText("Report Number: " + purityReportTitles.get(position));
+                                text2.setText("Report Number: " + purityReportTitles.get(position)
+                                        + "                        Submitted By: " + purityReportNames.get(position)
+                                );
                                 return view;
                             }
                         };
@@ -222,20 +236,101 @@ public class ViewReportActivity extends AppCompatActivity {
     }
 
     public void getAllSourceReports() {
-        sourceReportTitles.clear();
+        clearReportLists();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("source_reports");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
+                    for(DataSnapshot snap : templateSnapshot.getChildren()){
+                        WaterSourceReport wsReport = (WaterSourceReport) snap.getValue(WaterSourceReport.class);
+                        sourceReportList.add(wsReport);
+                        sourceReportTitles.add("" + wsReport.getReportNumber());
+                        sourceReportNames.add("" + wsReport.getSubmittedBy());
+
+                        ListAdapter adapter = new ArrayAdapter<String>(
+                                ViewReportActivity.this, android.R.layout.simple_list_item_2,
+                                android.R.id.text1, sourceReportTitles) {
+
+                            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                                View view = super.getView(position, convertView, parent);
+                                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                                text1.setText("Water Source Report");
+                                text2.setText("Report Number: " + sourceReportTitles.get(position)
+                                        + "                        Submitted By: " + sourceReportNames.get(position)
+                                );
+                                return view;
+                            }
+                        };
+                        listView.setAdapter(adapter);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     public void getAllPurityReports() {
-        sourceReportTitles.clear();
+        clearReportLists();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("purity_reports");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
+                    for(DataSnapshot snap : templateSnapshot.getChildren()){
+                        WaterPurityReport wpReport = (WaterPurityReport) snap.getValue(WaterPurityReport.class);
+                        purityReportList.add(wpReport);
+                        purityReportTitles.add("" + wpReport.getReportNumber());
+                        purityReportNames.add("" + wpReport.getSubmittedBy());
+
+                        ListAdapter adapter = new ArrayAdapter<String>(
+                                ViewReportActivity.this, android.R.layout.simple_list_item_2,
+                                android.R.id.text1, purityReportTitles) {
+
+                            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                                View view = super.getView(position, convertView, parent);
+                                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                                text1.setText("Water Purity Report");
+                                text2.setText("Report Number: " + purityReportTitles.get(position)
+                                              + "                        Submitted By: " + purityReportNames.get(position)
+                                );
+                                return view;
+                            }
+                        };
+                        listView.setAdapter(adapter);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     public void viewHistoricalReport() {
 
     }
 
-    private int getSelectedItem(BottomNavigationView bottomNavigationView){
+    public void clearReportLists() {
+        sourceReportList.clear();
+        purityReportList.clear();
+
+        sourceReportTitles.clear();
+        purityReportTitles.clear();
+
+        sourceReportNames.clear();
+        purityReportNames.clear();
+    }
+
+    public int getSelectedItem(BottomNavigationView bottomNavigationView){
         Menu menu = bottomNavigationView.getMenu();
-        for (int i=0;i<bottomNavigationView.getMenu().size();i++){
+        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++){
             MenuItem menuItem = menu.getItem(i);
             if (menuItem.isChecked()){
                 return menuItem.getItemId();
