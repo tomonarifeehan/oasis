@@ -54,64 +54,65 @@ public class RegPasswordActivity extends AppCompatActivity implements View.OnCli
 
     public void registerNewEmail(final String email, String password){
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        if (task.isSuccessful()){
-                            Log.d(TAG, "onComplete: AuthState: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            //Toast feedback.
-                            Toast.makeText(RegPasswordActivity.this, "Successfully Registered",
-                                    Toast.LENGTH_LONG).show();
-                            //Send verification email.
-                            sendVerificationEmail();
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                if (task.isSuccessful()){
+                    Log.d(TAG, "onComplete: AuthState: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    //Toast feedback.
+                    Toast.makeText(RegPasswordActivity.this, "Successfully Registered",
+                            Toast.LENGTH_LONG).show();
+                    //Send verification email.
+                    sendVerificationEmail();
 
-                            user.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            //Add User to Database
-                            FirebaseDatabase.getInstance().getReference()
-                                    .child(getString(R.string.dbnode_users))
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            FirebaseAuth.getInstance().signOut();
-                                            //Redirect the user to the login screen
-                                            redirectLoginScreen();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
+                    user.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    //Add User to Database
+                    FirebaseDatabase.getInstance().getReference()
+                            .child(getString(R.string.dbnode_users))
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .setValue(user)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(RegPasswordActivity.this, "something went wrong.", Toast.LENGTH_SHORT).show();
+                                public void onComplete(@NonNull Task<Void> task) {
                                     FirebaseAuth.getInstance().signOut();
-
                                     //Redirect the user to the login screen
                                     redirectLoginScreen();
                                 }
-                            });
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(RegPasswordActivity.this, "something went wrong.", Toast.LENGTH_SHORT).show();
+                            FirebaseAuth.getInstance().signOut();
 
-                            Count initialReportCount = new Count(0, 0, FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            FirebaseDatabase.getInstance().getReference()
-                                    .child(getString(R.string.dbnode_count))
-                                    .child(initialReportCount.getUid())
-                                    .setValue(initialReportCount)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
+                            //Redirect the user to the login screen
+                            redirectLoginScreen();
+                        }
+                    });
+
+                    //Initializes User Report Count
+                    Count initialReportCount = new Count(0, 0, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    FirebaseDatabase.getInstance().getReference()
+                            .child(getString(R.string.dbnode_count))
+                            .child(initialReportCount.getUid())
+                            .setValue(initialReportCount)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
-                                public void onFailure(@NonNull Exception e) {
+                                public void onComplete(@NonNull Task<Void> task) {
                                 }
-                            });
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
                         }
-                        if (!task.isSuccessful()) {
-                            //Toast feedback.
-                            Toast.makeText(RegPasswordActivity.this, "Unable to Register",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
+                if (!task.isSuccessful()) {
+                    //Toast feedback.
+                    Toast.makeText(RegPasswordActivity.this, "Unable to Register",
+                            Toast.LENGTH_SHORT).show();
+                }
+                }
+            });
     }
 
     private void redirectLoginScreen(){
@@ -125,17 +126,17 @@ public class RegPasswordActivity extends AppCompatActivity implements View.OnCli
 
         if (user != null) {
             user.sendEmailVerification()
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(RegPasswordActivity.this, "Sent Verification Email", Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                Toast.makeText(RegPasswordActivity.this, "Couldn't Verification Send Email", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(RegPasswordActivity.this, "Sent Verification Email", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(RegPasswordActivity.this, "Couldn't Verification Send Email", Toast.LENGTH_SHORT).show();
+                    }
+                    }
+                });
         }
     }
 }

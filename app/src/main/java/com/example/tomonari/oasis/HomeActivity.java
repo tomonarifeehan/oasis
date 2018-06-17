@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     private User user;
@@ -82,7 +85,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 Intent logoutIntent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(logoutIntent);
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(HomeActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
                 HomeActivity.this.finish();
+
             }
         });
         fabAdmin.setOnClickListener(new View.OnClickListener() {

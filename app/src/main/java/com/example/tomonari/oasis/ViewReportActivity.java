@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,9 @@ public class ViewReportActivity extends AppCompatActivity {
         spinnerSetup();
         listViewSetup();
         bottomNav();
-        getWaterSourceReports();
+        sourceReportTitles = new ArrayList<>();
+        purityReportList = new ArrayList<>();
+        getMySourceReports();
     }
 
     public void toolbarSetup() {
@@ -85,10 +88,20 @@ public class ViewReportActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (viewingOptionSpinner.getSelectedItem().toString() == "Water Source Reports") {
                     sourceReportTitles.clear();
-                    getWaterSourceReports();
+                    int tabId = getSelectedItem(bottomNav);
+                    if (tabId == R.id.action_my_reports) {
+                        getMySourceReports();
+                    } else {
+                        getAllSourceReports();
+                    }
                 } else if (viewingOptionSpinner.getSelectedItem().toString() == "Water Purity Reports") {
                     purityReportTitles.clear();
-                    getWaterPurityReports();
+                    int tabId = getSelectedItem(bottomNav);
+                    if (tabId == R.id.action_my_reports) {
+                        getMyPurityReports();
+                    } else {
+                        getAllPurityReports();
+                    }
                 }
             }
             @Override
@@ -112,6 +125,9 @@ public class ViewReportActivity extends AppCompatActivity {
                             case R.id.action_all_reports:
                                 Toast.makeText(ViewReportActivity.this, "All Reports",
                                         Toast.LENGTH_SHORT).show();
+                                sourceReportTitles.clear();
+                                getAllSourceReports();
+                                viewingOptionSpinner.setSelection(0);
                                 break;
                             case R.id.action_empty:
                                 Toast.makeText(ViewReportActivity.this, "Historical Reports",
@@ -120,6 +136,9 @@ public class ViewReportActivity extends AppCompatActivity {
                             case R.id.action_my_reports:
                                 Toast.makeText(ViewReportActivity.this, "My Reports",
                                         Toast.LENGTH_SHORT).show();
+                                sourceReportTitles.clear();
+                                getMySourceReports();
+                                viewingOptionSpinner.setSelection(0);
                                 break;
                             default:
                                 break;
@@ -129,7 +148,7 @@ public class ViewReportActivity extends AppCompatActivity {
                 });
     }
 
-    public List<WaterSourceReport> getWaterSourceReports() {
+    public void getMySourceReports() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query1 = reference.child("source_reports")
                 .orderByKey()
@@ -164,10 +183,9 @@ public class ViewReportActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        return sourceReportList;
     }
 
-    public List<WaterPurityReport> getWaterPurityReports() {DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    public void getMyPurityReports() {DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query1 = reference.child("purity_reports")
                 .orderByKey()
                 .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -201,18 +219,28 @@ public class ViewReportActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        return purityReportList;
     }
 
-    public void viewMyReports() {
-
+    public void getAllSourceReports() {
+        sourceReportTitles.clear();
     }
 
-    public void viewAllReports() {
-
+    public void getAllPurityReports() {
+        sourceReportTitles.clear();
     }
 
     public void viewHistoricalReport() {
 
+    }
+
+    private int getSelectedItem(BottomNavigationView bottomNavigationView){
+        Menu menu = bottomNavigationView.getMenu();
+        for (int i=0;i<bottomNavigationView.getMenu().size();i++){
+            MenuItem menuItem = menu.getItem(i);
+            if (menuItem.isChecked()){
+                return menuItem.getItemId();
+            }
+        }
+        return 0;
     }
 }
