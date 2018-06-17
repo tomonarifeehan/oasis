@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -35,6 +36,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
     private TextView reportTitle, contaminantTitle, waterTypeAndVirusPPMTitle, waterConditionAndOverallConditionTitle;
     private Switch switchButton;
     private int wsCount, wpCount, overallWsCount, overallWpCount;
+    private static final String TAG = "NewReport";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_new_report);
 
         user = (User) getIntent().getSerializableExtra("USER");
+        wsCount = getWaterSourceCount();
+        wpCount = getWaterPurityCount();
         overallWsCount = getOverallSourceCount();
         overallWpCount = getOverallPurityCount();
 
@@ -218,6 +222,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     Count count = (Count) singleSnapshot.getValue(Count.class);
                     wsCount = count.getSource_count();
+                    Log.d(TAG, "" + wsCount);
                 }
             }
             @Override
@@ -238,6 +243,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     Count count = (Count) singleSnapshot.getValue(Count.class);
                     wpCount = count.getPurity_count();
+                    Log.d(TAG, "" + wpCount);
                 }
             }
             @Override
