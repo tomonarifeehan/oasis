@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    tools:ignore="Overdraw">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/historical_report_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title_historical_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="81dp"
+            android:text="@string/label_historical_report"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/textview_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_historical_report"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="39dp"
+            android:layout_toStartOf="@+id/title_historical_report"
+            android:text="Location"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:id="@+id/location_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="29dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/textview_location"
+            android:layout_alignParentEnd="true">
+
+            <EditText
+                android:id="@+id/text_latitude"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="0dp"
+                android:ems="10"
+                android:hint="@string/latitude"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/text_longitude"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="0dp"
+                android:ems="10"
+                android:hint="@string/longitude"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title_virus_ppm_and_contaminant_ppm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textview_location"
+            android:layout_below="@+id/location_layout"
+            android:layout_marginTop="26dp"
+            android:text="Virus PPM/Contaminant PPM"
+            tools:ignore="HardcodedText" />
+
+        <Spinner
+            android:id="@+id/spinner_ppm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/title_virus_ppm_and_contaminant_ppm"
+            android:layout_below="@+id/title_virus_ppm_and_contaminant_ppm"
+            android:layout_marginEnd="64dp" />
+
+        <TextView
+            android:id="@+id/textview_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/spinner_ppm"
+            android:layout_below="@+id/spinner_ppm"
+            android:layout_marginTop="20dp"
+            android:text="Year"
+            tools:ignore="HardcodedText" />
+
+        <Spinner
+            android:id="@+id/spinner_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/spinner_ppm"
+            android:layout_alignStart="@+id/textview_year"
+            android:layout_below="@+id/textview_year" />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignEnd="@+id/spinner_year"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/spinner_year"
+            android:layout_marginBottom="121dp"
+            android:background="@color/colorButton"
+            android:text="@string/button_submit"
+            android:textColor="@color/colorPrimary"
+            tools:ignore="ButtonStyle" />
+    </RelativeLayout>
+</FrameLayout>

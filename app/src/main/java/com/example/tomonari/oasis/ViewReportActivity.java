@@ -133,8 +133,10 @@ public class ViewReportActivity extends AppCompatActivity {
                                 viewingOptionSpinner.setSelection(0);
                                 break;
                             case R.id.action_empty:
-                                Toast.makeText(ViewReportActivity.this, "Historical Reports",
-                                        Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(ViewReportActivity.this, HistoricalReportParametersActivity.class);
+                                intent.putExtra("USER", user);
+                                startActivity(intent);
+                                ViewReportActivity.this.finish();
                                 break;
                             case R.id.action_my_reports:
                                 Toast.makeText(ViewReportActivity.this, "My Reports",

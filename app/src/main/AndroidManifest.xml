@@ -22,6 +22,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +38,9 @@
         <activity android:name=".RegPasswordActivity" />
         <activity android:name=".NewReportActivity" />
         <activity android:name=".MapActivity" />
-        <activity android:name=".ViewReportActivity"></activity>
+        <activity android:name=".ViewReportActivity" />
+        <activity android:name=".HistoricalReportActivity" />
+        <activity android:name=".HistoricalReportParametersActivity"></activity>
     </application>
 
 </manifest>
