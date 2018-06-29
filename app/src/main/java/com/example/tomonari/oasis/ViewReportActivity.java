@@ -83,7 +83,7 @@ public class ViewReportActivity extends AppCompatActivity {
     public void spinnerSetup() {
         reportOptions.addAll(Arrays.asList("Water Source Reports", "Water Purity Reports"));
         viewingOptionSpinner = (Spinner) findViewById(R.id.spinner_report_options);
-        SpinnerAdapter reportOptionsAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, this.reportOptions);
+        ArrayAdapter<String> reportOptionsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, this.reportOptions);
         viewingOptionSpinner.setAdapter(reportOptionsAdapter);
         viewingOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -300,7 +300,7 @@ public class ViewReportActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
