@@ -11,8 +11,7 @@ import android.widget.TextView;
 public class ReportDetailsActivity extends AppCompatActivity {
 
     User user;
-    String type, report;
-    int position;
+    String type;
     WaterSourceReport wsReport = new WaterSourceReport();
     WaterPurityReport wpReport = new WaterPurityReport();
 
@@ -37,7 +36,6 @@ public class ReportDetailsActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("USER");
         type = (String) getIntent().getExtras().getString("TYPE");
-        position = (Integer) getIntent().getExtras().getInt("POSITION");
         if (type.equals("source")) {
             wsReport = (WaterSourceReport) getIntent().getExtras().getSerializable("REPORT");
             title.setText("Water Source Report #" + Integer.toString(wsReport.getReportNumber()));
@@ -64,7 +62,6 @@ public class ReportDetailsActivity extends AppCompatActivity {
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.view_report_toolbar);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -15,19 +15,19 @@ public class Count {
         this.uid = uid;
     }
 
-    public int getSource_count() {
+    public int getSourceCount() {
         return source_count;
     }
 
-    public void setSource_count(int source_count) {
+    public void setSourceCount(int source_count) {
         this.source_count = source_count;
     }
 
-    public int getPurity_count() {
+    public int getPurityCount() {
         return purity_count;
     }
 
-    public void setPurity_count(int purity_count) {
+    public void setPurityCount(int purity_count) {
         this.purity_count = purity_count;
     }
 

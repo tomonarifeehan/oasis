@@ -222,7 +222,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     Count count = (Count) singleSnapshot.getValue(Count.class);
-                    wsCount = count.getSource_count();
+                    wsCount = count.getSourceCount();
                 }
             }
             @Override
@@ -243,7 +243,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     Count count = (Count) singleSnapshot.getValue(Count.class);
-                    wpCount = count.getPurity_count();
+                    wpCount = count.getPurityCount();
                 }
             }
             @Override
@@ -261,7 +261,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 OverallCount count = (OverallCount) dataSnapshot.getValue(OverallCount.class);
-                overallWsCount = count.getSource_count();
+                overallWsCount = count.getSourceCount();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -277,7 +277,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 OverallCount count = (OverallCount) dataSnapshot.getValue(OverallCount.class);
-                overallWpCount = count.getPurity_count();
+                overallWpCount = count.getPurityCount();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

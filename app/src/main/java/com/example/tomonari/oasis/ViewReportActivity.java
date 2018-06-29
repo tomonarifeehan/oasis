@@ -119,7 +119,6 @@ public class ViewReportActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 Intent intent = new Intent(ViewReportActivity.this, ReportDetailsActivity.class);
                 intent.putExtra("USER", user);
-                intent.putExtra("POSITION", arg2);
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 Query query = reference.child("source_reports")
