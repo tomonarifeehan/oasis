@@ -59,8 +59,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        createReportPins(googleMap);
-        googleMap.setOnMarkerClickListener(this);
+        try {
+            createReportPins(googleMap);
+            googleMap.setOnMarkerClickListener(this);
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
     }
 
     public void createReportPins(final GoogleMap googleMap) {

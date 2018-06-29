@@ -31,9 +31,7 @@
             android:layout_alignStart="@+id/spinner_water_type"
             android:layout_centerVertical="true"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="#ffffff"
-            android:textColorHint="#FFFFFF"
+            android:inputType="numberDecimal"
             android:visibility="invisible"
             tools:ignore="LabelFor" />
 
@@ -42,9 +40,7 @@
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:textColor="#ffffff"
-            android:textColorHint="#FFFFFF"
+            android:inputType="numberDecimal"
             android:visibility="invisible"
             tools:ignore="LabelFor"
             android:layout_below="@+id/title_contaminant_ppm"

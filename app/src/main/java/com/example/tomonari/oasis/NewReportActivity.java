@@ -162,7 +162,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: " + e.toString());
+                Log.d(TAG, "onFailure: " + e.toString());
                 }
             });
     }
@@ -184,7 +184,7 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: " + e.toString());
+                Log.d(TAG, "onFailure: " + e.toString());
                 }
             });
     }
@@ -295,12 +295,12 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    Log.d(TAG, "onComplete: " + task.toString());
+                Log.d(TAG, "onComplete: " + task.toString());
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: " + e.toString());
+                Log.d(TAG, "onFailure: " + e.toString());
                 }
             });
     }
@@ -313,46 +313,46 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    Log.d(TAG, "onComplete: " + task.toString());
+                Log.d(TAG, "onComplete: " + task.toString());
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d(TAG, "onFailure: " + e.toString());
+                Log.d(TAG, "onFailure: " + e.toString());
                 }
             });
     }
 
     public void updateOverallSourceCount(OverallCount count) {
         FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.dbnode_overall_count))
-                .setValue(count)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG, "onComplete: " + task.toString());
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.toString());
-                    }
-                });
+            .child(getString(R.string.dbnode_overall_count))
+            .setValue(count)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "onComplete: " + task.toString());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: " + e.toString());
+                }
+            });
     }
     public void updateOverallPurityCount(OverallCount count) {
         FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.dbnode_overall_count))
-                .setValue(count)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG, "onComplete: " + task.toString());
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.toString());
-                    }
-                });
+            .child(getString(R.string.dbnode_overall_count))
+            .setValue(count)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "onComplete: " + task.toString());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: " + e.toString());
+                }
+            });
     }
 }
