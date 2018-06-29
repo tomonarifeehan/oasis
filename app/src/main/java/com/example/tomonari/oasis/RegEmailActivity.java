@@ -40,6 +40,10 @@ public class RegEmailActivity extends AppCompatActivity implements View.OnClickL
             intent.putExtra("USER", user);
             startActivity(intent);
             this.finish();
+        } else if (i == R.id.cancel_button) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            this.finish();
         }
     }
 }

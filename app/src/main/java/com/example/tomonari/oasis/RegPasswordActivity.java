@@ -46,8 +46,11 @@ public class RegPasswordActivity extends AppCompatActivity implements View.OnCli
         int i = v.getId();
         if (i == R.id.reg_button_signup) {
             user.setPassword(passwordField.getText().toString());
-            Log.d(TAG, user.toString());
             registerNewEmail(user.getEmail(), user.getPassword());
+        } else if (i == R.id.cancel_button) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            this.finish();
         }
     }
 

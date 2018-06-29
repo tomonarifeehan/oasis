@@ -69,11 +69,18 @@
     <string name="title_activity_ban_user">Ban User Activity</string>
     <string name="title_activity_remove_report">Remove Report Activity</string>
 
-    <!--EditText Strings-->
-
-    <!--TextView Strings-->
-
-    <!--Bottom Menu Strings-->
+    <!--WelcomeActivity-->
+    <!--RegAccountTypeActivity-->
+    <!--RegNameActivity-->
+    <!--RegEmailActivity-->
+    <!--RegPasswordActivity-->
+    <!--HomeActivity-->
+    <!--NewReportActivity-->
+    <!--MapActivity-->
+    <!--ViewReportActivity-->
+    <!--ReportDetailsActivity-->
+    <!--HistoricalReportParametersActivity-->
+    <!--HistoricalReportActivty-->
 
     <!-- Firebase Database Nodes -->
     <string name="dbnode_users">users</string>
