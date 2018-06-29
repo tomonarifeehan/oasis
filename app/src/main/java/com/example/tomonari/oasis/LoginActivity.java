@@ -68,17 +68,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (!isEmpty(emailField.getText().toString()) && !isEmpty(passwordField.getText().toString())) {
                 Log.d(TAG, "onClick: Attempting to authenticate.");
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(emailField.getText().toString(), passwordField.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d(TAG, "onComplete: Authentication complete.");
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "onComplete: Authentication complete.");
 
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onFailure: Authentication failed.");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure: Authentication failed.");
                     }
                 });
             } else {
@@ -87,24 +87,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void setupFirebaseAuth(){
+    public void setupFirebaseAuth(){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    //Check if email is verified.
-                    if(user.isEmailVerified()){
-                        Log.d(TAG, "onAuthStateChanged: Signed in " + user.getUid());
-                        Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                        getUserAccountData();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Email is not verified.\nCheck your inbox.", Toast.LENGTH_SHORT).show();
-                        FirebaseAuth.getInstance().signOut();
-                    }
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (user != null) {
+                //Check if email is verified.
+                if(user.isEmailVerified()){
+                    Log.d(TAG, "onAuthStateChanged: Signed in " + user.getUid());
+                    Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                    getUserAccountData();
                 } else {
-                    Log.d(TAG, "onAuthStateChanged: Signed out " + user.getUid());
+                    Toast.makeText(LoginActivity.this, "Email is not verified.\nCheck your inbox.", Toast.LENGTH_SHORT).show();
+                    FirebaseAuth.getInstance().signOut();
                 }
+            } else {
+                Log.d(TAG, "onAuthStateChanged: Signed out " + user.getUid());
+            }
             }
         };
     }
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void getUserAccountData(){
+    public void getUserAccountData(){
         Log.d(TAG, "getUserAccountData: Getting the user account data.");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query1 = reference.child("users")
@@ -148,11 +148,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private boolean isEmpty(String string){
+    public boolean isEmpty(String string){
         return string.equals("");
     }
 
-    private boolean validForm() {
+    public boolean validForm() {
         boolean valid = true;
         String email = emailField.getText().toString();
         String password = passwordField.getText().toString();

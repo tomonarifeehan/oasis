@@ -113,13 +113,13 @@ public class RegPasswordActivity extends AppCompatActivity implements View.OnCli
             });
     }
 
-    private void redirectLoginScreen(){
+    public void redirectLoginScreen(){
         Intent intent = new Intent(RegPasswordActivity.this, LoginActivity.class);
         startActivity(intent);
         this.finish();
     }
 
-    private void sendVerificationEmail() {
+    public void sendVerificationEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             user.sendEmailVerification()

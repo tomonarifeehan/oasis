@@ -101,27 +101,27 @@ public class HomeActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.action_viewMap:
-                            Intent mapIntent = new Intent(HomeActivity.this, MapActivity.class);
-                            mapIntent.putExtra("USER", user);
-                            startActivity(mapIntent);
-                            HomeActivity.this.finish();
-                            break;
-                        case R.id.action_newReport:
-                            Intent newReportIntent = new Intent(HomeActivity.this, NewReportActivity.class);
-                            newReportIntent.putExtra("USER", user);
-                            startActivity(newReportIntent);
-                            HomeActivity.this.finish();
-                            break;
-                        case R.id.action_viewReports:
-                            Intent viewReportIntent = new Intent(HomeActivity.this, ViewReportActivity.class);
-                            viewReportIntent.putExtra("USER", user);
-                            startActivity(viewReportIntent);
-                            HomeActivity.this.finish();
-                            break;
-                    }
-                    return true;
+                switch (item.getItemId()) {
+                    case R.id.action_viewMap:
+                        Intent mapIntent = new Intent(HomeActivity.this, MapActivity.class);
+                        mapIntent.putExtra("USER", user);
+                        startActivity(mapIntent);
+                        HomeActivity.this.finish();
+                        break;
+                    case R.id.action_newReport:
+                        Intent newReportIntent = new Intent(HomeActivity.this, NewReportActivity.class);
+                        newReportIntent.putExtra("USER", user);
+                        startActivity(newReportIntent);
+                        HomeActivity.this.finish();
+                        break;
+                    case R.id.action_viewReports:
+                        Intent viewReportIntent = new Intent(HomeActivity.this, ViewReportActivity.class);
+                        viewReportIntent.putExtra("USER", user);
+                        startActivity(viewReportIntent);
+                        HomeActivity.this.finish();
+                        break;
+                }
+                return true;
                 }
             });
     }
