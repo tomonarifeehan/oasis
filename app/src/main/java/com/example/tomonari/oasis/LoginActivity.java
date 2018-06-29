@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     FirebaseAuth.getInstance().signOut();
                 }
             } else {
-                Log.d(TAG, "onAuthStateChanged: Signed out " + user.getUid());
+                Log.d(TAG, "onAuthStateChanged: Signed out.");
             }
             }
         };

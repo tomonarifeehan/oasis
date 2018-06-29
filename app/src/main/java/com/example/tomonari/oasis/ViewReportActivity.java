@@ -35,7 +35,7 @@ import java.util.List;
 public class ViewReportActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Spinner viewingOptionSpinner;
-    private SpinnerAdapter adaptReportOptions;
+    private SpinnerAdapter reportOptionsAdapter;
     private ListView listView;
     private BottomNavigationView bottomNav;
 
@@ -85,8 +85,8 @@ public class ViewReportActivity extends AppCompatActivity {
     public void spinnerSetup() {
         reportOptions.addAll(Arrays.asList("Water Source Reports", "Water Purity Reports"));
         viewingOptionSpinner = (Spinner) findViewById(R.id.spinner_report_options);
-        adaptReportOptions = new ArrayAdapter(this, android.R.layout.simple_spinner_item, this.reportOptions);
-        viewingOptionSpinner.setAdapter(adaptReportOptions);
+        reportOptionsAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, this.reportOptions);
+        viewingOptionSpinner.setAdapter(reportOptionsAdapter);
         viewingOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -124,6 +124,27 @@ public class ViewReportActivity extends AppCompatActivity {
                 Intent intent = new Intent(ViewReportActivity.this, ReportDetailsActivity.class);
                 intent.putExtra("USER", user);
                 intent.putExtra("POSITION", position);
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                Query query = reference.child("source_reports")
+                        .orderByKey()
+                        .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
+                            for(DataSnapshot snap : templateSnapshot.getChildren()){
+                                WaterSourceReport wsReport = (WaterSourceReport) snap.getValue(WaterSourceReport.class);
+                                sourceReportList.add(wsReport);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: " + databaseError.toString());
+                    }
+                });
+
                 if (viewingOptionSpinner.getSelectedItem().toString().equals("Water Source Reports")) {
                     intent.putExtra("REPORT", sourceReportList.get(position));
                     intent.putExtra("TYPE", "source");
@@ -182,7 +203,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot snap : templateSnapshot.getChildren()){
                         WaterSourceReport wsReport = (WaterSourceReport) snap.getValue(WaterSourceReport.class);
@@ -207,7 +228,7 @@ public class ViewReportActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
@@ -221,7 +242,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot snap : templateSnapshot.getChildren()){
                         WaterPurityReport wpReport = (WaterPurityReport) snap.getValue(WaterPurityReport.class);
@@ -245,7 +266,7 @@ public class ViewReportActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
@@ -257,7 +278,7 @@ public class ViewReportActivity extends AppCompatActivity {
         Query query = reference.child("source_reports");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot snap : templateSnapshot.getChildren()){
                         WaterSourceReport wsReport = (WaterSourceReport) snap.getValue(WaterSourceReport.class);
