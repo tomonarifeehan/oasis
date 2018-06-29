@@ -40,7 +40,8 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".ViewReportActivity" />
         <activity android:name=".HistoricalReportActivity" />
-        <activity android:name=".HistoricalReportParametersActivity"></activity>
+        <activity android:name=".HistoricalReportParametersActivity" />
+        <activity android:name=".ReportDetailsActivity"></activity>
     </application>
 
 </manifest>

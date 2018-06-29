@@ -117,6 +117,24 @@ public class ViewReportActivity extends AppCompatActivity {
 
     public void listViewSetup() {
         listView = (ListView) findViewById(R.id.report_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                int position = arg2;
+                Intent intent = new Intent(ViewReportActivity.this, ReportDetailsActivity.class);
+                intent.putExtra("USER", user);
+                intent.putExtra("POSITION", position);
+                if (viewingOptionSpinner.getSelectedItem().toString().equals("Water Source Reports")) {
+                    intent.putExtra("REPORT", sourceReportList.get(position));
+                    intent.putExtra("TYPE", "source");
+                } else {
+                    intent.putExtra("REPORT", purityReportList.get(position));
+                    intent.putExtra("TYPE", "purity");
+                }
+                startActivity(intent);
+                ViewReportActivity.this.finish();
+            }
+        });
     }
 
     public void bottomNav() {
@@ -210,11 +228,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         purityReportList.add(wpReport);
                         purityReportTitles.add("" + wpReport.getReportNumber());
                         purityReportNames.add("" + wpReport.getSubmittedBy());
-
-                        ListAdapter adapter = new ArrayAdapter<String>(
-                                ViewReportActivity.this, android.R.layout.simple_list_item_2,
-                                android.R.id.text1, purityReportTitles) {
-
+                        ListAdapter adapter = new ArrayAdapter<String>(ViewReportActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, purityReportTitles) {
                             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
@@ -287,10 +301,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         purityReportList.add(wpReport);
                         purityReportTitles.add("" + wpReport.getReportNumber());
                         purityReportNames.add("" + wpReport.getSubmittedBy());
-                        ListAdapter adapter = new ArrayAdapter<String>(
-                                ViewReportActivity.this, android.R.layout.simple_list_item_2,
-                                android.R.id.text1, purityReportTitles) {
-
+                        ListAdapter adapter = new ArrayAdapter<String>(ViewReportActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, purityReportTitles) {
                             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
