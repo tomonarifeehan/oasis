@@ -33,9 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ViewReportActivity extends AppCompatActivity {
-    private Toolbar toolbar;
     private Spinner viewingOptionSpinner;
-    private SpinnerAdapter reportOptionsAdapter;
     private ListView listView;
     private BottomNavigationView bottomNav;
 
@@ -67,7 +65,7 @@ public class ViewReportActivity extends AppCompatActivity {
     }
 
     public void toolbarSetup() {
-        toolbar = (Toolbar) findViewById(R.id.view_ws_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.view_ws_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -85,7 +83,7 @@ public class ViewReportActivity extends AppCompatActivity {
     public void spinnerSetup() {
         reportOptions.addAll(Arrays.asList("Water Source Reports", "Water Purity Reports"));
         viewingOptionSpinner = (Spinner) findViewById(R.id.spinner_report_options);
-        reportOptionsAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, this.reportOptions);
+        SpinnerAdapter reportOptionsAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, this.reportOptions);
         viewingOptionSpinner.setAdapter(reportOptionsAdapter);
         viewingOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -110,7 +108,6 @@ public class ViewReportActivity extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                return;
             }
         });
     }
@@ -120,10 +117,9 @@ public class ViewReportActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                int position = arg2;
                 Intent intent = new Intent(ViewReportActivity.this, ReportDetailsActivity.class);
                 intent.putExtra("USER", user);
-                intent.putExtra("POSITION", position);
+                intent.putExtra("POSITION", arg2);
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 Query query = reference.child("source_reports")
@@ -146,10 +142,10 @@ public class ViewReportActivity extends AppCompatActivity {
                 });
 
                 if (viewingOptionSpinner.getSelectedItem().toString().equals("Water Source Reports")) {
-                    intent.putExtra("REPORT", sourceReportList.get(position));
+                    intent.putExtra("REPORT", sourceReportList.get(arg2));
                     intent.putExtra("TYPE", "source");
                 } else {
-                    intent.putExtra("REPORT", purityReportList.get(position));
+                    intent.putExtra("REPORT", purityReportList.get(arg2));
                     intent.putExtra("TYPE", "purity");
                 }
                 startActivity(intent);
@@ -211,7 +207,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         sourceReportTitles.add("" + wsReport.getReportNumber());
                         sourceReportNames.add("" + wsReport.getSubmittedBy());
                         ListAdapter adapter = new ArrayAdapter<String>(ViewReportActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, sourceReportTitles) {
-                            @Override
+                            @Override @NonNull
                             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
@@ -250,6 +246,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         purityReportTitles.add("" + wpReport.getReportNumber());
                         purityReportNames.add("" + wpReport.getSubmittedBy());
                         ListAdapter adapter = new ArrayAdapter<String>(ViewReportActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, purityReportTitles) {
+                            @Override @NonNull
                             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
@@ -286,7 +283,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         sourceReportTitles.add("" + wsReport.getReportNumber());
                         sourceReportNames.add("" + wsReport.getSubmittedBy());
                         ListAdapter adapter = new ArrayAdapter<String>(ViewReportActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, sourceReportTitles) {
-                            @Override
+                            @Override @NonNull
                             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
@@ -315,7 +312,7 @@ public class ViewReportActivity extends AppCompatActivity {
         Query query = reference.child("purity_reports");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()) {
                     for(DataSnapshot snap : templateSnapshot.getChildren()){
                         WaterPurityReport wpReport = (WaterPurityReport) snap.getValue(WaterPurityReport.class);
@@ -323,6 +320,7 @@ public class ViewReportActivity extends AppCompatActivity {
                         purityReportTitles.add("" + wpReport.getReportNumber());
                         purityReportNames.add("" + wpReport.getSubmittedBy());
                         ListAdapter adapter = new ArrayAdapter<String>(ViewReportActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, purityReportTitles) {
+                            @Override @NonNull
                             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
@@ -339,7 +337,7 @@ public class ViewReportActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
