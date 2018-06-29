@@ -14,7 +14,7 @@ import android.widget.SpinnerAdapter;
 public class RegAccountTypeActivity extends AppCompatActivity implements View.OnClickListener {
     private final User user = new User();
     private Spinner accTypeSpinner;
-    private static final String TAG = "Registration";
+    private static final String TAG = "RegAccountTypeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

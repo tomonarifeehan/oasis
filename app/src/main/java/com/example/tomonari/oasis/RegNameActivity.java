@@ -11,7 +11,8 @@ import android.widget.EditText;
 public class RegNameActivity extends AppCompatActivity implements View.OnClickListener {
     private User user;
     private EditText nameField;
-    private static final String TAG = "Registration";
+
+    private static final String TAG = "RegNameActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,6 @@ public class RegNameActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         int i = v.getId();
-
         if (i == R.id.reg_button_continue) {
             user.setName(nameField.getText().toString());
             Log.d(TAG, user.toString());

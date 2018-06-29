@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class GifImageView extends View {
-
     private InputStream mInputStream;
     private Movie mMovie;
     private int mWidth, mHeight;
@@ -38,8 +37,7 @@ public class GifImageView extends View {
         }
     }
 
-
-    private void init() {
+    public void init() {
         setFocusable(true);
         mMovie = Movie.decodeStream(mInputStream);
         mWidth = mMovie.width();
@@ -55,24 +53,18 @@ public class GifImageView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         long now = SystemClock.uptimeMillis();
-
         if (mStart == 0) {
             mStart = now;
         }
-
         if (mMovie != null) {
 
             int duration = mMovie.duration();
             if (duration == 0) {
                 duration = 1000;
             }
-
             int relTime = (int) ((now - mStart) % duration);
-
             mMovie.setTime(relTime);
-
             mMovie.draw(canvas, 0, 0);
             invalidate();
         }

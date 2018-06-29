@@ -45,6 +45,8 @@ public class HistoricalReportActivity extends AppCompatActivity {
     private List<Integer> november = new ArrayList<>();
     private List<Integer> december = new ArrayList<>();
 
+    private static final String TAG = "HistReportActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +66,10 @@ public class HistoricalReportActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HistoricalReportActivity.this, HistoricalReportParametersActivity.class);
-                intent.putExtra("USER", user);
-                startActivity(intent);
-                HistoricalReportActivity.this.finish();
+            Intent intent = new Intent(HistoricalReportActivity.this, HistoricalReportParametersActivity.class);
+            intent.putExtra("USER", user);
+            startActivity(intent);
+            HistoricalReportActivity.this.finish();
             }
         });
         latitude = getIntent().getExtras().getString("LATITUDE");
@@ -112,7 +114,6 @@ public class HistoricalReportActivity extends AppCompatActivity {
                     for(DataSnapshot snap : templateSnapshot.getChildren()){
                         WaterPurityReport wpReport = (WaterPurityReport) snap.getValue(WaterPurityReport.class);
                         Date databaseDate = wpReport.getDate();
-                        Log.d("DATABASE_DATE", databaseDate.toString());
                         if (selectedYear == databaseDate.getYear() && selectedLocation.equals("" + wpReport.getLocation())) {
                             if (databaseDate.toString().contains("Jan")) {
                                 Log.d("JAN", "JAN");
@@ -164,18 +165,6 @@ public class HistoricalReportActivity extends AppCompatActivity {
                                 december.add(wpReport.getContaminantPPM());
                             }
                         }
-                        Log.d("January ", "" + january);
-                        Log.d("February ", "" + february);
-                        Log.d("March ", "" + march);
-                        Log.d("April ", "" + april);
-                        Log.d("May ", "" + may);
-                        Log.d("June ", "" + june);
-                        Log.d("July ", "" + july);
-                        Log.d("August ", "" + august);
-                        Log.d("September ", "" + september);
-                        Log.d("October ", "" + october);
-                        Log.d("November ", "" + november);
-                        Log.d("December ", "" + december);
                     }
                 }
                 TextView graphParams = (TextView) findViewById(R.id.textview_parameters);
@@ -194,28 +183,28 @@ public class HistoricalReportActivity extends AppCompatActivity {
                 decText.setText("December: " + calculateAverage(december));
 
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                        new DataPoint(0, calculateAverage(january)),
-                        new DataPoint(1, calculateAverage(february)),
-                        new DataPoint(2, calculateAverage(march)),
-                        new DataPoint(3, calculateAverage(april)),
-                        new DataPoint(4, calculateAverage(may)),
-                        new DataPoint(5, calculateAverage(june)),
-                        new DataPoint(6, calculateAverage(july)),
-                        new DataPoint(7, calculateAverage(august)),
-                        new DataPoint(8, calculateAverage(september)),
-                        new DataPoint(9, calculateAverage(october)),
-                        new DataPoint(10, calculateAverage(november)),
-                        new DataPoint(11, calculateAverage(december))
+                    new DataPoint(0, calculateAverage(january)),
+                    new DataPoint(1, calculateAverage(february)),
+                    new DataPoint(2, calculateAverage(march)),
+                    new DataPoint(3, calculateAverage(april)),
+                    new DataPoint(4, calculateAverage(may)),
+                    new DataPoint(5, calculateAverage(june)),
+                    new DataPoint(6, calculateAverage(july)),
+                    new DataPoint(7, calculateAverage(august)),
+                    new DataPoint(8, calculateAverage(september)),
+                    new DataPoint(9, calculateAverage(october)),
+                    new DataPoint(10, calculateAverage(november)),
+                    new DataPoint(11, calculateAverage(december))
                 });
                 graph.addSeries(series);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
     }
 
-    //Average PPM Calculator
     public static double calculateAverage(List<Integer> list) {
         double sum = 0;
         if (list != null) {

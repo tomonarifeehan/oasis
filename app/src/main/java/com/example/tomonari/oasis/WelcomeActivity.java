@@ -6,17 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
+    GifImageView gifImageView;
+
+    private static final String TAG = "WelcomeActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        findViewById(R.id.logo).setOnClickListener(this);
-
-        GifImageView gifImageView = (GifImageView) findViewById(R.id.GifImageView);
+        gifImageView = (GifImageView) findViewById(R.id.GifImageView);
         gifImageView.setGifImageResource(R.drawable.oasis);
-
+        findViewById(R.id.logo).setOnClickListener(this);
     }
 
     @Override

@@ -36,7 +36,8 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
     private TextView reportTitle, contaminantTitle, waterTypeAndVirusPPMTitle, waterConditionAndOverallConditionTitle;
     private Switch switchButton;
     private int wsCount, wpCount, overallWsCount, overallWpCount;
-    private static final String TAG = "NewReport";
+
+    private static final String TAG = "NewReportActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +84,10 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NewReportActivity.this, HomeActivity.class);
-                intent.putExtra("USER", user);
-                startActivity(intent);
-                NewReportActivity.this.finish();
+            Intent intent = new Intent(NewReportActivity.this, HomeActivity.class);
+            intent.putExtra("USER", user);
+            startActivity(intent);
+            NewReportActivity.this.finish();
             }
         });
 
@@ -94,35 +95,35 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    //Updates UI for Water Purity Report
-                    reportTitle.setText("Water Purity Report");
+            if (isChecked) {
+                //Updates UI for Water Purity Report
+                reportTitle.setText("Water Purity Report");
 
-                    waterConditionAndOverallConditionTitle.setText("Overall Condition");
-                    waterCondition.setVisibility(View.INVISIBLE);
-                    overallCondition.setVisibility(View.VISIBLE);
+                waterConditionAndOverallConditionTitle.setText("Overall Condition");
+                waterCondition.setVisibility(View.INVISIBLE);
+                overallCondition.setVisibility(View.VISIBLE);
 
-                    waterTypeAndVirusPPMTitle.setText("Virus PPM");
-                    waterType.setVisibility(View.INVISIBLE);
-                    waterVirusPPM.setVisibility(View.VISIBLE);
+                waterTypeAndVirusPPMTitle.setText("Virus PPM");
+                waterType.setVisibility(View.INVISIBLE);
+                waterVirusPPM.setVisibility(View.VISIBLE);
 
-                    contaminantTitle.setVisibility(View.VISIBLE);
-                    waterContaminantPPM.setVisibility(View.VISIBLE);
-                } else {
-                    //Updates UI for Water Source Report
-                    reportTitle.setText("Water Source Report");
+                contaminantTitle.setVisibility(View.VISIBLE);
+                waterContaminantPPM.setVisibility(View.VISIBLE);
+            } else {
+                //Updates UI for Water Source Report
+                reportTitle.setText("Water Source Report");
 
-                    waterConditionAndOverallConditionTitle.setText("Water Condition");
-                    overallCondition.setVisibility(View.INVISIBLE);
-                    waterCondition.setVisibility(View.VISIBLE);
+                waterConditionAndOverallConditionTitle.setText("Water Condition");
+                overallCondition.setVisibility(View.INVISIBLE);
+                waterCondition.setVisibility(View.VISIBLE);
 
-                    waterTypeAndVirusPPMTitle.setText("Water Type");
-                    waterVirusPPM.setVisibility(View.INVISIBLE);
-                    waterType.setVisibility(View.VISIBLE);
+                waterTypeAndVirusPPMTitle.setText("Water Type");
+                waterVirusPPM.setVisibility(View.INVISIBLE);
+                waterType.setVisibility(View.VISIBLE);
 
-                    contaminantTitle.setVisibility(View.INVISIBLE);
-                    waterContaminantPPM.setVisibility(View.INVISIBLE);
-                }
+                contaminantTitle.setVisibility(View.INVISIBLE);
+                waterContaminantPPM.setVisibility(View.INVISIBLE);
+            }
             }
         });
     }
@@ -146,44 +147,46 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
 
     public void addWaterSourceReport(WaterSourceReport sourceReport) {
         FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.dbnode_source_reports))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(Integer.toString(getOverallSourceCount() + 1))
-                .setValue(sourceReport)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Count c = new Count(getWaterSourceCount() + 1, getWaterPurityCount(), FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        updateWaterSourceCount(c);
-                        OverallCount oc = new OverallCount(getOverallSourceCount() + 1, getOverallPurityCount());
-                        updateOverallSourceCount(oc);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+            .child(getString(R.string.dbnode_source_reports))
+            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+            .child(Integer.toString(getOverallSourceCount() + 1))
+            .setValue(sourceReport)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                Count c = new Count(getWaterSourceCount() + 1, getWaterPurityCount(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                updateWaterSourceCount(c);
+                OverallCount oc = new OverallCount(getOverallSourceCount() + 1, getOverallPurityCount());
+                updateOverallSourceCount(oc);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "onFailure: " + e.toString());
+                }
+            });
     }
 
     public void addWaterPurityReport(WaterPurityReport purityReport) {
         FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.dbnode_purity_reports))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(Integer.toString(getOverallPurityCount() + 1))
-                .setValue(purityReport)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Count c = new Count(getWaterSourceCount(), getWaterPurityCount() + 1, FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        updateWaterPurityCount(c);
-                        OverallCount oc = new OverallCount(getOverallSourceCount(), getOverallPurityCount() + 1);
-                        updateOverallPurityCount(oc);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+            .child(getString(R.string.dbnode_purity_reports))
+            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+            .child(Integer.toString(getOverallPurityCount() + 1))
+            .setValue(purityReport)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                Count c = new Count(getWaterSourceCount(), getWaterPurityCount() + 1, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                updateWaterPurityCount(c);
+                OverallCount oc = new OverallCount(getOverallSourceCount(), getOverallPurityCount() + 1);
+                updateOverallPurityCount(oc);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "onFailure: " + e.toString());
+                }
+            });
     }
 
     public WaterPurityReport compileWaterPurityReport() {
@@ -195,11 +198,10 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
         int cPPM = Integer.parseInt(waterContaminantPPM.getText().toString());
         String submittedBy = user.getName();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
         return new WaterPurityReport(reportNumber, currentDate, location, condition, submittedBy, vPPM, cPPM, uid);
     }
 
-    private WaterSourceReport compileWaterSourceReport() {
+    public WaterSourceReport compileWaterSourceReport() {
         int reportNumber = getOverallSourceCount() + 1;
         Date currentDate = new Date();
         String location = waterLocationLatitude.getText().toString() + "," + waterLocationLongitude.getText().toString();
@@ -207,56 +209,55 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
         WaterCondition condition = (WaterCondition) waterCondition.getSelectedItem();
         String submittedBy = user.getName();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
         return new WaterSourceReport(reportNumber, currentDate, location, type, condition, submittedBy, uid);
     }
 
-    private int getWaterSourceCount() {
+    public int getWaterSourceCount() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query1 = reference.child(getString(R.string.dbnode_count))
-                .orderByKey()
-                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = reference.child(getString(R.string.dbnode_count))
+                        .orderByKey()
+                        .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     Count count = (Count) singleSnapshot.getValue(Count.class);
                     wsCount = count.getSource_count();
-                    Log.d(TAG, "" + wsCount);
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
         return wsCount;
     }
 
-    private int getWaterPurityCount() {
+    public int getWaterPurityCount() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query1 = reference.child(getString(R.string.dbnode_count))
-                .orderByKey()
-                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = reference.child(getString(R.string.dbnode_count))
+                        .orderByKey()
+                        .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     Count count = (Count) singleSnapshot.getValue(Count.class);
                     wpCount = count.getPurity_count();
-                    Log.d(TAG, "" + wpCount);
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
         return wpCount;
     }
 
-    private int getOverallSourceCount() {
+    public int getOverallSourceCount() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query1 = reference.child(getString(R.string.dbnode_overall_count));
-        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = reference.child(getString(R.string.dbnode_overall_count));
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 OverallCount count = (OverallCount) dataSnapshot.getValue(OverallCount.class);
@@ -264,14 +265,15 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
         return overallWsCount;
     }
-    private int getOverallPurityCount() {
+    public int getOverallPurityCount() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query1 = reference.child(getString(R.string.dbnode_overall_count));
-        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = reference.child(getString(R.string.dbnode_overall_count));
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 OverallCount count = (OverallCount) dataSnapshot.getValue(OverallCount.class);
@@ -279,69 +281,78 @@ public class NewReportActivity extends AppCompatActivity implements View.OnClick
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
         return overallWpCount;
     }
 
-    private void updateWaterSourceCount(Count count) {
+    public void updateWaterSourceCount(Count count) {
         FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.dbnode_count))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .setValue(count)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+            .child(getString(R.string.dbnode_count))
+            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+            .setValue(count)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.d(TAG, "onComplete: " + task.toString());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "onFailure: " + e.toString());
+                }
+            });
     }
 
-    private void updateWaterPurityCount(Count count) {
+    public void updateWaterPurityCount(Count count) {
         FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.dbnode_count))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .setValue(count)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+            .child(getString(R.string.dbnode_count))
+            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+            .setValue(count)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.d(TAG, "onComplete: " + task.toString());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "onFailure: " + e.toString());
+                }
+            });
     }
 
-    private void updateOverallSourceCount(OverallCount count) {
+    public void updateOverallSourceCount(OverallCount count) {
         FirebaseDatabase.getInstance().getReference()
                 .child(getString(R.string.dbnode_overall_count))
                 .setValue(count)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "onComplete: " + task.toString());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: " + e.toString());
+                    }
+                });
     }
-    private void updateOverallPurityCount(OverallCount count) {
+    public void updateOverallPurityCount(OverallCount count) {
         FirebaseDatabase.getInstance().getReference()
                 .child(getString(R.string.dbnode_overall_count))
                 .setValue(count)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "onComplete: " + task.toString());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: " + e.toString());
+                    }
+                });
     }
 }

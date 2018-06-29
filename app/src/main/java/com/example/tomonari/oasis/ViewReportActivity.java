@@ -48,6 +48,8 @@ public class ViewReportActivity extends AppCompatActivity {
     private List<String> sourceReportNames = new ArrayList<>();
     private List<String> purityReportNames = new ArrayList<>();
 
+    private static final String TAG = "ViewReportActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +73,10 @@ public class ViewReportActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewReportActivity.this, HomeActivity.class);
-                intent.putExtra("USER", user);
-                startActivity(intent);
-                ViewReportActivity.this.finish();
+            Intent intent = new Intent(ViewReportActivity.this, HomeActivity.class);
+            intent.putExtra("USER", user);
+            startActivity(intent);
+            ViewReportActivity.this.finish();
             }
         });
     }
@@ -87,7 +89,7 @@ public class ViewReportActivity extends AppCompatActivity {
         viewingOptionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (viewingOptionSpinner.getSelectedItem().toString() == "Water Source Reports") {
+                if (viewingOptionSpinner.getSelectedItem().toString().equals("Water Source Reports")) {
                     clearReportLists();
                     int tabId = getSelectedItem(bottomNav);
                     if (tabId == R.id.action_my_reports) {
@@ -95,7 +97,7 @@ public class ViewReportActivity extends AppCompatActivity {
                     } else {
                         getAllSourceReports();
                     }
-                } else if (viewingOptionSpinner.getSelectedItem().toString() == "Water Purity Reports") {
+                } else if (viewingOptionSpinner.getSelectedItem().toString().equals("Water Purity Reports")) {
                     clearReportLists();
                     int tabId = getSelectedItem(bottomNav);
                     if (tabId == R.id.action_my_reports) {
@@ -119,48 +121,48 @@ public class ViewReportActivity extends AppCompatActivity {
     public void bottomNav() {
         bottomNav = (BottomNavigationView) findViewById(R.id.view_ws_bottom_navbar);
         bottomNav.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_all_reports:
-                                Toast.makeText(ViewReportActivity.this, "All Reports",
-                                        Toast.LENGTH_SHORT).show();
-                                clearReportLists();
-                                if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
-                                    getAllSourceReports();
-                                }
-                                viewingOptionSpinner.setSelection(0);
-                                break;
-                            case R.id.action_empty:
-                                Intent intent = new Intent(ViewReportActivity.this, HistoricalReportParametersActivity.class);
-                                intent.putExtra("USER", user);
-                                startActivity(intent);
-                                ViewReportActivity.this.finish();
-                                break;
-                            case R.id.action_my_reports:
-                                Toast.makeText(ViewReportActivity.this, "My Reports",
-                                        Toast.LENGTH_SHORT).show();
-                                clearReportLists();
-                                if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
-                                    getMySourceReports();
-                                }
-                                viewingOptionSpinner.setSelection(0);
-                                break;
-                            default:
-                                break;
-                        }
-                        return true;
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.action_all_reports:
+                            Toast.makeText(ViewReportActivity.this, "All Reports",
+                                    Toast.LENGTH_SHORT).show();
+                            clearReportLists();
+                            if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
+                                getAllSourceReports();
+                            }
+                            viewingOptionSpinner.setSelection(0);
+                            break;
+                        case R.id.action_empty:
+                            Intent intent = new Intent(ViewReportActivity.this, HistoricalReportParametersActivity.class);
+                            intent.putExtra("USER", user);
+                            startActivity(intent);
+                            ViewReportActivity.this.finish();
+                            break;
+                        case R.id.action_my_reports:
+                            Toast.makeText(ViewReportActivity.this, "My Reports",
+                                    Toast.LENGTH_SHORT).show();
+                            clearReportLists();
+                            if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
+                                getMySourceReports();
+                            }
+                            viewingOptionSpinner.setSelection(0);
+                            break;
+                        default:
+                            break;
                     }
-                });
+                    return true;
+                }
+            });
     }
 
     public void getMySourceReports() {
         clearReportLists();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("source_reports")
-                .orderByKey()
-                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        .orderByKey()
+                        .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -170,11 +172,8 @@ public class ViewReportActivity extends AppCompatActivity {
                         sourceReportList.add(wsReport);
                         sourceReportTitles.add("" + wsReport.getReportNumber());
                         sourceReportNames.add("" + wsReport.getSubmittedBy());
-
-                        ListAdapter adapter = new ArrayAdapter<String>(
-                                ViewReportActivity.this, android.R.layout.simple_list_item_2,
-                                android.R.id.text1, sourceReportTitles) {
-
+                        ListAdapter adapter = new ArrayAdapter<String>(ViewReportActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, sourceReportTitles) {
+                            @Override
                             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
@@ -192,6 +191,7 @@ public class ViewReportActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
     }
@@ -200,8 +200,8 @@ public class ViewReportActivity extends AppCompatActivity {
         clearReportLists();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("purity_reports")
-                .orderByKey()
-                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        .orderByKey()
+                        .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -233,6 +233,7 @@ public class ViewReportActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
     }
@@ -250,11 +251,8 @@ public class ViewReportActivity extends AppCompatActivity {
                         sourceReportList.add(wsReport);
                         sourceReportTitles.add("" + wsReport.getReportNumber());
                         sourceReportNames.add("" + wsReport.getSubmittedBy());
-
-                        ListAdapter adapter = new ArrayAdapter<String>(
-                                ViewReportActivity.this, android.R.layout.simple_list_item_2,
-                                android.R.id.text1, sourceReportTitles) {
-
+                        ListAdapter adapter = new ArrayAdapter<String>(ViewReportActivity.this, android.R.layout.simple_list_item_2, android.R.id.text1, sourceReportTitles) {
+                            @Override
                             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                                 View view = super.getView(position, convertView, parent);
                                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
@@ -272,6 +270,7 @@ public class ViewReportActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
     }
@@ -289,7 +288,6 @@ public class ViewReportActivity extends AppCompatActivity {
                         purityReportList.add(wpReport);
                         purityReportTitles.add("" + wpReport.getReportNumber());
                         purityReportNames.add("" + wpReport.getSubmittedBy());
-
                         ListAdapter adapter = new ArrayAdapter<String>(
                                 ViewReportActivity.this, android.R.layout.simple_list_item_2,
                                 android.R.id.text1, purityReportTitles) {
@@ -311,12 +309,9 @@ public class ViewReportActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: " + databaseError.toString());
             }
         });
-    }
-
-    public void viewHistoricalReport() {
-
     }
 
     public void clearReportLists() {

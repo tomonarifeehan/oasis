@@ -13,11 +13,13 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity {
     private User user;
     private FloatingActionButton fab;
     private FloatingActionButton fabEdit, fabLogout, fabAdmin;
     private TextView nameField, emailField, accountTypeField;
+
+    private static final String TAG = "HomeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +38,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         uiSetup();
     }
 
-    @Override
-    public void onClick(View v) {
-    }
-
-    private void uiSetup() {
+    public void uiSetup() {
         fabSetup();
         bottomBar();
     }
 
-    private void fabSetup() {
+    public void fabSetup() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
         fabLogout = (FloatingActionButton) findViewById(R.id.fabLogout);
         fabAdmin = (FloatingActionButton) findViewById(R.id.fabAdmin);
-
         fab.setOnClickListener(new View.OnClickListener() {
             boolean open = false;
             @Override
@@ -59,9 +56,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     fabEdit.show();
                     fabLogout.show();
                     fabAdmin.show();
-//                    if (user.getAccountType() == AccountType.ADMINISTRATOR) {
-//                        fabAdmin.show();
-//                    }
                     open = true;
                 } else {
                     fabEdit.hide();
@@ -74,61 +68,61 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent editUser = new Intent(HomeActivity.this, LoginActivity.class);
-                editUser.putExtra("USER", user);
-                startActivity(editUser);
-                HomeActivity.this.finish();
+            Intent editUser = new Intent(HomeActivity.this, LoginActivity.class);
+            editUser.putExtra("USER", user);
+            startActivity(editUser);
+            HomeActivity.this.finish();
             }
         });
         fabLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent logoutIntent = new Intent(HomeActivity.this, LoginActivity.class);
-                startActivity(logoutIntent);
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(HomeActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
-                HomeActivity.this.finish();
+            Intent logoutIntent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(logoutIntent);
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(HomeActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
+            HomeActivity.this.finish();
 
             }
         });
         fabAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent adminIntent = new Intent(HomeActivity.this, LoginActivity.class);
-                startActivity(adminIntent);
-                HomeActivity.this.finish();
+            Intent adminIntent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(adminIntent);
+            HomeActivity.this.finish();
             }
         });
     }
 
-    private void bottomBar() {
+    public void bottomBar() {
         BottomNavigationView botNavbar = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         botNavbar.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_viewMap:
-                                Intent mapIntent = new Intent(HomeActivity.this, MapActivity.class);
-                                mapIntent.putExtra("USER", user);
-                                startActivity(mapIntent);
-                                HomeActivity.this.finish();
-                                break;
-                            case R.id.action_newReport:
-                                Intent newReportIntent = new Intent(HomeActivity.this, NewReportActivity.class);
-                                newReportIntent.putExtra("USER", user);
-                                startActivity(newReportIntent);
-                                HomeActivity.this.finish();
-                                break;
-                            case R.id.action_viewReports:
-                                Intent viewReportIntent = new Intent(HomeActivity.this, ViewReportActivity.class);
-                                viewReportIntent.putExtra("USER", user);
-                                startActivity(viewReportIntent);
-                                HomeActivity.this.finish();
-                                break;
-                        }
-                        return true;
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.action_viewMap:
+                            Intent mapIntent = new Intent(HomeActivity.this, MapActivity.class);
+                            mapIntent.putExtra("USER", user);
+                            startActivity(mapIntent);
+                            HomeActivity.this.finish();
+                            break;
+                        case R.id.action_newReport:
+                            Intent newReportIntent = new Intent(HomeActivity.this, NewReportActivity.class);
+                            newReportIntent.putExtra("USER", user);
+                            startActivity(newReportIntent);
+                            HomeActivity.this.finish();
+                            break;
+                        case R.id.action_viewReports:
+                            Intent viewReportIntent = new Intent(HomeActivity.this, ViewReportActivity.class);
+                            viewReportIntent.putExtra("USER", user);
+                            startActivity(viewReportIntent);
+                            HomeActivity.this.finish();
+                            break;
                     }
-                });
+                    return true;
+                }
+            });
     }
 }

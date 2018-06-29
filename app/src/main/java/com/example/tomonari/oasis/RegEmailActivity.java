@@ -11,7 +11,7 @@ import android.widget.EditText;
 public class RegEmailActivity extends AppCompatActivity implements View.OnClickListener {
     User user;
     private EditText emailField;
-    private static final String TAG = "Registration";
+    private static final String TAG = "RegEmailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

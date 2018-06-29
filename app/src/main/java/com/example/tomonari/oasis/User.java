@@ -12,7 +12,6 @@ public class User implements Serializable {
     private AccountType accountType;
     private String uid;
 
-
     /**
      * Empty constructor for Firebase
      *

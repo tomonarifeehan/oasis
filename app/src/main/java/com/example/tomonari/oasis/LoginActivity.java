@@ -29,11 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private static final String TAG = "EmailPassword";
-    private TextView mStatusTextView;
     private EditText emailField, passwordField;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private static final String TAG = "LoginActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         // Views
-        mStatusTextView = (TextView) findViewById(R.id.status);
         emailField = (EditText) findViewById(R.id.field_email);
         passwordField = (EditText) findViewById(R.id.field_password);
         emailField.setTextColor(getResources().getColor(R.color.colorAccent));
@@ -67,35 +65,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         } else if (i == R.id.email_sign_in_button) {
             //check if the fields are filled out
-            if(!isEmpty(emailField.getText().toString())
-                    && !isEmpty(passwordField.getText().toString())){
-                Log.d(TAG, "onClick: attempting to authenticate.");
-
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(emailField.getText().toString(),
-                        passwordField.getText().toString())
+            if (!isEmpty(emailField.getText().toString()) && !isEmpty(passwordField.getText().toString())) {
+                Log.d(TAG, "onClick: Attempting to authenticate.");
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(emailField.getText().toString(), passwordField.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                Log.d(TAG, "onComplete:");
+                                Log.d(TAG, "onComplete: Authentication complete.");
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onFailure:");
+                        Log.d(TAG, "onFailure: Authentication failed.");
                     }
                 });
-            }else {
+            } else {
                 Toast.makeText(LoginActivity.this, "You didn't fill in all the fields.", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: started.");
-
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -103,16 +95,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (user != null) {
                     //Check if email is verified.
                     if(user.isEmailVerified()){
-                        Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                        Log.d(TAG, "onAuthStateChanged: Signed in " + user.getUid());
                         Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
-
                         getUserAccountData();
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Email is not Verified\nCheck your Inbox", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Email is not verified.\nCheck your inbox.", Toast.LENGTH_SHORT).show();
                         FirebaseAuth.getInstance().signOut();
                     }
                 } else {
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    Log.d(TAG, "onAuthStateChanged: Signed out " + user.getUid());
                 }
             }
         };
@@ -133,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void getUserAccountData(){
-        Log.d(TAG, "getUserAccountData: getting the user's account information");
+        Log.d(TAG, "getUserAccountData: Getting the user account data.");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query1 = reference.child("users")
                 .orderByKey()
@@ -142,8 +133,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: (QUERY METHOD 1) found user: "
-                            + singleSnapshot.getValue(User.class).toString());
                     User user = (User) singleSnapshot.getValue(User.class);
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -152,10 +141,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     finish();
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d(TAG, databaseError.toString());
             }
         });
     }
@@ -195,5 +183,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         return valid;
     }
-
 }

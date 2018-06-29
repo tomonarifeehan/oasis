@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -16,12 +17,13 @@ import java.util.List;
 
 public class HistoricalReportParametersActivity extends AppCompatActivity implements View.OnClickListener {
     private User user;
-    private Spinner ppmSpinner;
-    private Spinner yearSpinner;
-    private EditText latitude;
-    private EditText longitude;
+    private Toolbar toolbar;
+    private EditText latitude, longitude;
+    private Spinner ppmSpinner, yearSpinner;
     private final List<String> ppmOptions = new ArrayList<>();
     private final List<Integer> yearOptions = new ArrayList<>();
+
+    private static final String TAG = "HistReportParamActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +31,16 @@ public class HistoricalReportParametersActivity extends AppCompatActivity implem
         setContentView(R.layout.activity_historical_report_parameters);
 
         user = (User) getIntent().getSerializableExtra("USER");
-
-        findViewById(R.id.submit_button).setOnClickListener(this);
+        toolbar = (Toolbar) findViewById(R.id.historical_report_toolbar);
         latitude = (EditText) findViewById(R.id.text_latitude);
         longitude = (EditText) findViewById(R.id.text_longitude);
+        ppmSpinner = (Spinner) findViewById(R.id.spinner_ppm);
         yearSpinner = (Spinner) findViewById(R.id.spinner_year);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.historical_report_toolbar);
+        findViewById(R.id.submit_button).setOnClickListener(this);
 
         //Virus PPM Spinner
         ppmOptions.add("Virus PPM");
         ppmOptions.add("Contaminant PPM");
-        ppmSpinner = (Spinner) findViewById(R.id.spinner_ppm);
         SpinnerAdapter adaptPPM = new ArrayAdapter(this, android.R.layout.simple_spinner_item, ppmOptions);
         ppmSpinner.setAdapter(adaptPPM);
 
@@ -58,10 +59,10 @@ public class HistoricalReportParametersActivity extends AppCompatActivity implem
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HistoricalReportParametersActivity.this, ViewReportActivity.class);
-                intent.putExtra("USER", user);
-                startActivity(intent);
-                HistoricalReportParametersActivity.this.finish();
+            Intent intent = new Intent(HistoricalReportParametersActivity.this, ViewReportActivity.class);
+            intent.putExtra("USER", user);
+            startActivity(intent);
+            HistoricalReportParametersActivity.this.finish();
             }
         });
     }

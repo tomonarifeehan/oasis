@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private SupportMapFragment mapFragment;
     private TextView reportInfoTextView;
 
+    private static final String TAG = "MapActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +47,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MapActivity.this, HomeActivity.class);
-                intent.putExtra("USER", user);
-                startActivity(intent);
-                MapActivity.this.finish();
+            Intent intent = new Intent(MapActivity.this, HomeActivity.class);
+            intent.putExtra("USER", user);
+            startActivity(intent);
+            MapActivity.this.finish();
             }
         });
     }
@@ -71,22 +74,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         double longitude = Double.parseDouble(wsReport.getLocation().split(",")[1]);
                         LatLng location = new LatLng(latitude, longitude);
                         String snippetText = "\n\n\tReport Number: " + wsReport.getReportNumber()
-                                + "\n\n\tSubmitted By: " + wsReport.getSubmittedBy()
-                                + "\n\n\tDate: " + wsReport.getDate()
-                                + "\n\n\tLocation: " + wsReport.getLocation()
-                                + "\n\n\tWater Type: " + wsReport.getWaterType()
-                                + "\n\n\tWater Condition: " + wsReport.getWaterCondition();
+                            + "\n\n\tSubmitted By: " + wsReport.getSubmittedBy()
+                            + "\n\n\tDate: " + wsReport.getDate()
+                            + "\n\n\tLocation: " + wsReport.getLocation()
+                            + "\n\n\tWater Type: " + wsReport.getWaterType()
+                            + "\n\n\tWater Condition: " + wsReport.getWaterCondition();
                         googleMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(latitude, longitude))
-                                .title("Water Source Report " + wsReport.getReportNumber())
-                                .snippet(snippetText)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                            .position(new LatLng(latitude, longitude))
+                            .title("Water Source Report " + wsReport.getReportNumber())
+                            .snippet(snippetText)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                         googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
                     }
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, databaseError.toString());
             }
         });
 
@@ -101,23 +105,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         double longitude = Double.parseDouble(wpReport.getLocation().split(",")[1]);
                         LatLng location = new LatLng(latitude, longitude);
                         String snippetText = "\n\n\tReport Number: " + wpReport.getReportNumber()
-                                + "\n\n\tSubmitted By: " + wpReport.getSubmittedBy()
-                                + "\n\n\tDate: " + wpReport.getDate()
-                                + "\n\n\tLocation: " + wpReport.getLocation()
-                                + "\n\n\tOverall Condition: " + wpReport.getOverallCondition()
-                                + "\n\n\tVirus PPM: " + wpReport.getVirusPPM()
-                                + "\n\n\tContaminant PPM: " + wpReport.getContaminantPPM();
+                            + "\n\n\tSubmitted By: " + wpReport.getSubmittedBy()
+                            + "\n\n\tDate: " + wpReport.getDate()
+                            + "\n\n\tLocation: " + wpReport.getLocation()
+                            + "\n\n\tOverall Condition: " + wpReport.getOverallCondition()
+                            + "\n\n\tVirus PPM: " + wpReport.getVirusPPM()
+                            + "\n\n\tContaminant PPM: " + wpReport.getContaminantPPM();
                         googleMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(latitude, longitude))
-                                .title("Water Purity Report " + wpReport.getReportNumber())
-                                .snippet(snippetText)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                            .position(new LatLng(latitude, longitude))
+                            .title("Water Purity Report " + wpReport.getReportNumber())
+                            .snippet(snippetText)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                         googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
                     }
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, databaseError.toString());
             }
         });
     }
