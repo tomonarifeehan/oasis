@@ -61,6 +61,7 @@ public class ViewReportActivity extends AppCompatActivity {
         spinnerSetup();
         listViewSetup();
         bottomNav();
+
         clearReportLists();
         getMySourceReports();
     }
@@ -124,35 +125,33 @@ public class ViewReportActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.action_all_reports:
-                            Toast.makeText(ViewReportActivity.this, "All Reports",
-                                    Toast.LENGTH_SHORT).show();
-                            clearReportLists();
-                            if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
-                                getAllSourceReports();
-                            }
-                            viewingOptionSpinner.setSelection(0);
-                            break;
-                        case R.id.action_empty:
-                            Intent intent = new Intent(ViewReportActivity.this, HistoricalReportParametersActivity.class);
-                            intent.putExtra("USER", user);
-                            startActivity(intent);
-                            ViewReportActivity.this.finish();
-                            break;
-                        case R.id.action_my_reports:
-                            Toast.makeText(ViewReportActivity.this, "My Reports",
-                                    Toast.LENGTH_SHORT).show();
-                            clearReportLists();
-                            if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
-                                getMySourceReports();
-                            }
-                            viewingOptionSpinner.setSelection(0);
-                            break;
-                        default:
-                            break;
-                    }
-                    return true;
+                switch (item.getItemId()) {
+                    case R.id.action_all_reports:
+                        Toast.makeText(ViewReportActivity.this, "All Reports", Toast.LENGTH_SHORT).show();
+                        clearReportLists();
+                        if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
+                            getAllSourceReports();
+                        }
+                        viewingOptionSpinner.setSelection(0);
+                        break;
+                    case R.id.action_empty:
+                        Intent intent = new Intent(ViewReportActivity.this, HistoricalReportParametersActivity.class);
+                        intent.putExtra("USER", user);
+                        startActivity(intent);
+                        ViewReportActivity.this.finish();
+                        break;
+                    case R.id.action_my_reports:
+                        Toast.makeText(ViewReportActivity.this, "My Reports", Toast.LENGTH_SHORT).show();
+                        clearReportLists();
+                        if (viewingOptionSpinner.getSelectedItemPosition() == 0) {
+                            getMySourceReports();
+                        }
+                        viewingOptionSpinner.setSelection(0);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
                 }
             });
     }
@@ -282,7 +281,7 @@ public class ViewReportActivity extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()){
+                for(DataSnapshot templateSnapshot : dataSnapshot.getChildren()) {
                     for(DataSnapshot snap : templateSnapshot.getChildren()){
                         WaterPurityReport wpReport = (WaterPurityReport) snap.getValue(WaterPurityReport.class);
                         purityReportList.add(wpReport);
@@ -325,11 +324,11 @@ public class ViewReportActivity extends AppCompatActivity {
         purityReportNames.clear();
     }
 
-    public int getSelectedItem(BottomNavigationView bottomNavigationView){
+    public int getSelectedItem(BottomNavigationView bottomNavigationView) {
         Menu menu = bottomNavigationView.getMenu();
-        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++){
+        for (int i = 0; i < bottomNavigationView.getMenu().size(); i++) {
             MenuItem menuItem = menu.getItem(i);
-            if (menuItem.isChecked()){
+            if (menuItem.isChecked()) {
                 return menuItem.getItemId();
             }
         }

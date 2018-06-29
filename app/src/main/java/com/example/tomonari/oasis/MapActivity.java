@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private User user = new User();
+
+    private Toolbar toolbar;
     private SupportMapFragment mapFragment;
     private TextView reportInfoTextView;
 
@@ -40,7 +42,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         reportInfoTextView = (TextView) findViewById(R.id.textview_report_info);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.map_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.map_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
