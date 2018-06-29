@@ -81,16 +81,6 @@
             app:srcCompat="@drawable/cog" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabAdmin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:elevation="0dp"
-            android:visibility="invisible"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/admin" />
-
-        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

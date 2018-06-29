@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class HomeActivity extends AppCompatActivity {
     private User user;
     private FloatingActionButton fab;
-    private FloatingActionButton fabEdit, fabLogout, fabAdmin;
+    private FloatingActionButton fabEdit, fabLogout;
     private TextView nameField, emailField, accountTypeField;
 
     private static final String TAG = "HomeActivity";
@@ -47,7 +47,6 @@ public class HomeActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
         fabLogout = (FloatingActionButton) findViewById(R.id.fabLogout);
-        fabAdmin = (FloatingActionButton) findViewById(R.id.fabAdmin);
         fab.setOnClickListener(new View.OnClickListener() {
             boolean open = false;
             @Override
@@ -55,12 +54,10 @@ public class HomeActivity extends AppCompatActivity {
                 if (!open) {
                     fabEdit.show();
                     fabLogout.show();
-                    fabAdmin.show();
                     open = true;
                 } else {
                     fabEdit.hide();
                     fabLogout.hide();
-                    fabAdmin.hide();
                     open = false;
                 }
             }
@@ -81,15 +78,6 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(logoutIntent);
             FirebaseAuth.getInstance().signOut();
             Toast.makeText(HomeActivity.this, "Signed out.", Toast.LENGTH_SHORT).show();
-            HomeActivity.this.finish();
-
-            }
-        });
-        fabAdmin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            Intent adminIntent = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(adminIntent);
             HomeActivity.this.finish();
             }
         });
