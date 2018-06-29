@@ -77,4 +77,7 @@
     <string name="dbnode_purity_reports">purity_reports</string>
     <string name="dbnode_count">count</string>
     <string name="dbnode_overall_count">overall_count</string>
+
+    <!-- Google Maps API Key -->
+    <string name="google_maps_key">INSERT_API_KEY</string>
 </resources>
