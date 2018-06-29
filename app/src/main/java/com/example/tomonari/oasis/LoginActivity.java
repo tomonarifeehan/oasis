@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // Buttons
         findViewById(R.id.email_create_account_button).setOnClickListener(this);
-        findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         findViewById(R.id.forgotButton).setOnClickListener(this);
 

@@ -2,75 +2,74 @@
     <string name="app_name">Oasis</string>
 
     <!--LoginActivity-->
-    <string name="login">Login</string>
-    <string name="newAccountLogin">No account yet? Create one</string>
-    <string name="signed_out">Signed Out</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="verify_email">Verify Email</string>
+    <string name="login_textview_email">Email</string>
+    <string name="login_textview_password">Password</string>
+    <string name="login_button_login">LOGIN</string>
+    <string name="login_textview_create_account">No account yet? Register here.</string>
+    <string name="login_button_forgot_password">FORGOT PASSWORD?</string>
 
     <!--RegAccountTypeActivity-->
-    <string name="label_accq">What account type?</string>
-    <string name="button_continue">Continue</string>
-    <string name="cancel">Cancel</string>
+    <string name="reg_account_type_textview_title">What account type?</string>
+    <string name="reg_account_type_button_continue">Continue</string>
+    <string name="reg_account_type_button_cancel">Cancel</string>
 
     <!--RegNameActivity-->
-    <string name="label_nameq">What is your name?</string>
-    <string name="label_name">NAME</string>
-    <!--<string name="button_continue">Continue</string>-->
-    <!--<string name="cancel">Cancel</string>-->
+    <string name="reg_name_textview_title">What is your name?</string>
+    <string name="reg_name_textview_name">NAME</string>
+    <string name="reg_name_button_continue">Continue</string>
+    <string name="reg_name_button_cancel">Cancel</string>
 
     <!--RegEmailActivity-->
-    <string name="label_emailq">What is your email?</string>
-    <string name="label_email">EMAIL</string>
-    <!--<string name="button_continue">Continue</string>-->
-    <!--<string name="cancel">Cancel</string>-->
+    <string name="reg_email_textview_title">What is your email?</string>
+    <string name="reg_email_textview_email">EMAIL</string>
+    <string name="reg_email_button_continue">Continue</string>
+    <string name="reg_email_button_cancel">Cancel</string>
 
     <!--RegPasswordActivity-->
-    <string name="label_passwordq">What is your password?</string>
-    <string name="label_password">PASSWORD</string>
-    <string name="button_signup">Sign up!</string>
-    <!--<string name="button_continue">Continue</string>-->
-    <!--<string name="cancel">Cancel</string>-->
+    <string name="reg_password_textview_title">What is your password?</string>
+    <string name="reg_password_textview_password">PASSWORD</string>
+    <string name="reg_password_button_sign_up">Sign up!</string>
+    <string name="reg_password_button_cancel">Cancel</string>
 
     <!--HomeActivity-->
-    <string name="user_profile">User Profile</string>
-    <!--<string name="label_name">NAME</string>-->
-    <!--<string name="label_email">EMAIL</string>-->
-    <string name="label_account">ACCOUNT TYPE</string>
+    <string name="home_textview_title">User Profile</string>
+    <string name="home_textview_name">NAME</string>
+    <string name="home_textview_email">EMAIL</string>
+    <string name="home_textview_account_type">ACCOUNT TYPE</string>
 
     <!--NewReportActivity-->
-    <string name="button_submit">Submit</string>
-    <string name="label_contaminant_ppm"> Contaminant PPM</string>
-    <string name="label_watertype">Water Type</string>
-    <string name="label_watercondition">Water Condition</string>
-    <string name="waterSourceReport">Water Source Report</string>
-    <string name="location">Location</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
+    <string name="new_report_textview_contaminant_ppm">Contaminant PPM</string>
+    <string name="new_report_textview_water_type">Water Type</string>
+    <string name="new_report_textview_water_condition">Water Condition</string>
+    <string name="new_report_textview_title">Water Source Report</string>
+    <string name="new_report_textview_location">Location</string>
+    <string name="new_report_edittext_latitude">Latitude</string>
+    <string name="new_report_edittext_longitude">Longitude</string>
+    <string name="new_report_button_submit">Submit</string>
 
     <!--ReportDetailsActivity-->
-    <string name="label_reportNum">Report Number: </string>
-    <string name="label_reportDate">Date: </string>
-    <string name="label_reportLoc">Location: </string>
-    <string name="label_reportAuth">Author: </string>
+    <string name="report_details_textview_report_number">Report Number: </string>
+    <string name="report_details_textview_date">Date: </string>
+    <string name="report_details_textview_location">Location: </string>
+    <string name="report_details_textview_submitted_by">Submitted By: </string>
 
     <!--HistoricalReportParametersActivity-->
-    <string name="label_historical_report">Historical Report Settings</string>
-    <!--<string name="location">Location</string>-->
-    <!--<string name="latitude">Latitude</string>-->
-    <!--<string name="longitude">Longitude</string>-->
-    <string name="label_ppm">Virus PPM/Contaminant PPM</string>
-    <string name="label_year">Year</string>
-    <!--<string name="button_submit">Submit</string>-->
+    <string name="historical_report_parameters_textview_title">Historical Report Settings</string>
+    <string name="historical_report_parameters_textview_location">Location</string>
+    <string name="historical_report_parameters_edittext_latitude">Latitude</string>
+    <string name="historical_report_parameters_edittext_longitude">Longitude</string>
+    <string name="historical_report_parameters_textview_ppm">Virus PPM/Contaminant PPM</string>
+    <string name="historical_report_parameters_textview_year">Year</string>
+    <string name="historical_report_parameters_button_submit">Submit</string>
 
     <!--HomeActivity Menu-->
-    <string name="text_newReport">New</string>
-    <string name="text_viewMap">Map</string>
-    <string name="text_viewReports">View Reports</string>
+    <string name="home_tab_new_report">New</string>
+    <string name="home_tab_map">Map</string>
+    <string name="home_tab_view_reports">View Reports</string>
 
     <!--ViewReportActivity Menu-->
-    <string name="all_reports">All Reports</string>
-    <string name="my_reports">My Reports</string>
+    <string name="view_report_tab_all_reports">All Reports</string>
+    <string name="view_report_tab_my_reports">My Reports</string>
 
     <!-- Firebase Database Nodes -->
     <string name="dbnode_users">users</string>

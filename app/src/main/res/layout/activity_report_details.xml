@@ -51,7 +51,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/label_reportNum"
+                    android:text="@string/report_details_textview_report_number"
                     android:textStyle="bold" />
 
                 <TextView
@@ -76,7 +76,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/label_reportDate"
+                    android:text="@string/report_details_textview_date"
                     android:textStyle="bold" />
 
                 <TextView
@@ -101,7 +101,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/label_reportLoc"
+                    android:text="@string/report_details_textview_location"
                     android:textStyle="bold" />
 
                 <TextView
@@ -126,7 +126,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/label_reportAuth"
+                    android:text="@string/report_details_textview_submitted_by"
                     android:textStyle="bold" />
 
                 <TextView

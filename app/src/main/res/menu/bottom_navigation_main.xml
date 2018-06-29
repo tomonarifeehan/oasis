@@ -4,20 +4,20 @@
     <item
         android:id="@+id/action_newReport"
         android:enabled="true"
-        android:title="@string/text_newReport"
+        android:title="@string/home_tab_new_report"
         android:icon="@drawable/ic_new_report"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_viewMap"
         android:enabled="true"
-        android:title="@string/text_viewMap"
+        android:title="@string/home_tab_map"
         android:icon="@drawable/ic_map"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_viewReports"
         android:enabled="true"
-        android:title="@string/text_viewReports"
+        android:title="@string/home_tab_view_reports"
         android:icon="@drawable/ic_report"
         app:showAsAction="ifRoom" />
 </menu>

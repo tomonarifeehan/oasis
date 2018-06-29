@@ -7,9 +7,6 @@
     android:background="@color/colorPrimary"
     tools:context="com.example.tomonari.oasis.RegEmailActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,8 +16,6 @@
         android:textSize="50sp"
         android:textStyle="bold" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,8 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"/>
-            <!--android:minHeight="?attr/actionBarSize"-->
-            <!--android:theme="?attr/actionBarTheme" />-->
 
         <LinearLayout
             style="?metaButtonBarStyle"
@@ -57,7 +50,7 @@
                     android:id="@+id/linearLayout4">
 
                     <TextView
-                        android:text="@string/label_emailq"
+                        android:text="@string/reg_email_textview_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="100dp"
@@ -70,7 +63,7 @@
                         android:layout_marginTop="60dp">
 
                         <TextView
-                            android:text="@string/label_email"
+                            android:text="@string/reg_email_textview_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -88,7 +81,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:background="@color/colorButton"
-                            android:text="@string/button_continue"
+                            android:text="@string/reg_email_button_continue"
                             android:textColor="@color/colorPrimary" />
                     </LinearLayout>
 
@@ -101,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="13dp"
                     android:layout_marginTop="45dp"
-                    android:text="@string/cancel"
+                    android:text="@string/reg_email_button_cancel"
                     android:layout_alignTop="@+id/linearLayout4"
                     android:layout_alignParentEnd="true"
                     tools:ignore="HardcodedText" />

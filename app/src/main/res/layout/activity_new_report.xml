@@ -55,7 +55,7 @@
             android:layout_alignStart="@+id/text_contaminant_ppm"
             android:layout_marginBottom="67dp"
             android:background="@color/colorButton"
-            android:text="@string/button_submit"
+            android:text="@string/new_report_button_submit"
             tools:ignore="ButtonStyle" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:layout_alignStart="@+id/text_virus_ppm"
             android:layout_below="@+id/text_virus_ppm"
             android:layout_marginTop="38dp"
-            android:text="@string/label_contaminant_ppm"
+            android:text="@string/new_report_textview_contaminant_ppm"
             android:visibility="invisible" />
 
         <Spinner
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/text_virus_ppm"
             android:layout_alignStart="@+id/spinner_water_condition"
-            android:text="@string/label_watertype" />
+            android:text="@string/new_report_textview_water_type" />
 
         <TextView
             android:id="@+id/title_water_condition_and_overall_condition"
@@ -101,7 +101,7 @@
             android:layout_alignStart="@+id/text_location"
             android:layout_below="@+id/linearLayout3"
             android:layout_marginTop="11dp"
-            android:text="@string/label_watercondition" />
+            android:text="@string/new_report_textview_water_condition" />
 
         <Switch
             android:id="@+id/report_switch"
@@ -124,7 +124,7 @@
             android:layout_below="@+id/report_switch"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="17dp"
-            android:text="@string/waterSourceReport"
+            android:text="@string/new_report_textview_title"
             android:textStyle="bold" />
 
         <TextView
@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="@string/location"
+            android:text="@string/new_report_textview_location"
             android:layout_below="@+id/text_report_title"
             android:layout_toStartOf="@+id/text_report_title"
             android:layout_marginEnd="23dp" />
@@ -152,7 +152,7 @@
                 android:layout_marginStart="45dp"
                 android:layout_marginTop="0dp"
                 android:ems="10"
-                android:hint="@string/latitude"
+                android:hint="@string/new_report_edittext_latitude"
                 android:inputType="numberDecimal" />
 
             <EditText
@@ -162,7 +162,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="0dp"
                 android:ems="10"
-                android:hint="@string/longitude"
+                android:hint="@string/new_report_edittext_longitude"
                 android:inputType="numberDecimal" />
 
         </LinearLayout>

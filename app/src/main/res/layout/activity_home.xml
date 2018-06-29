@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="@string/user_profile"
+            android:text="@string/home_textview_title"
             android:textColor="@color/colorDark"
             android:textSize="30sp" />
 
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/label_name"
+            android:text="@string/home_textview_name"
             android:textColor="@color/colorDark"
             tools:ignore="NestedWeights" />
 
@@ -38,14 +38,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/label_email"
+            android:text="@string/home_textview_email"
             android:textColor="@color/colorDark" />
 
         <TextView
             android:id="@+id/account_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_account"
+            android:text="@string/home_textview_account_type"
             android:textColor="@color/colorDark" />
 
     </LinearLayout>

@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="81dp"
-            android:text="@string/label_historical_report"
+            android:text="@string/historical_report_parameters_textview_title"
             android:textStyle="bold"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
@@ -33,7 +33,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="39dp"
             android:layout_toStartOf="@+id/title_historical_report"
-            android:text="@string/location"
+            android:text="@string/historical_report_parameters_textview_location"
             tools:ignore="HardcodedText" />
 
         <LinearLayout
@@ -52,7 +52,7 @@
                 android:layout_marginStart="45dp"
                 android:layout_marginTop="0dp"
                 android:ems="10"
-                android:hint="@string/latitude"
+                android:hint="@string/historical_report_parameters_edittext_latitude"
                 android:inputType="numberDecimal" />
 
             <EditText
@@ -62,7 +62,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="0dp"
                 android:ems="10"
-                android:hint="@string/longitude"
+                android:hint="@string/historical_report_parameters_edittext_longitude"
                 android:inputType="numberDecimal" />
 
         </LinearLayout>
@@ -74,7 +74,7 @@
             android:layout_alignStart="@+id/textview_location"
             android:layout_below="@+id/location_layout"
             android:layout_marginTop="26dp"
-            android:text="@string/label_ppm"
+            android:text="@string/historical_report_parameters_textview_ppm"
             tools:ignore="HardcodedText" />
 
         <Spinner
@@ -93,7 +93,7 @@
             android:layout_alignStart="@+id/spinner_ppm"
             android:layout_below="@+id/spinner_ppm"
             android:layout_marginTop="20dp"
-            android:text="@string/label_year"
+            android:text="@string/historical_report_parameters_textview_year"
             tools:ignore="HardcodedText" />
 
         <Spinner
@@ -113,7 +113,7 @@
             android:layout_alignStart="@+id/spinner_year"
             android:layout_marginBottom="121dp"
             android:background="@color/colorButton"
-            android:text="@string/button_submit"
+            android:text="@string/historical_report_parameters_button_submit"
             android:textColor="@color/colorPrimary"
             tools:ignore="ButtonStyle" />
     </RelativeLayout>
