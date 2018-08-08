@@ -1,12 +1,9 @@
 # Oasis
-Crowd-Sourced Water Reporting App
-
-![Alt Text](https://github.com/tomonarifeehan/Oasis/blob/master/oasis.gif)
-
-## Description
 - Crowd-sourced water quality reporting application that supports finding clean drinking water and recording of test results.</br>
 - Android application that uses Google Maps API, GraphView library and Firebase backend.</br>
 - Developed with the Agile process using object-oriented design patterns.</br>
+
+![Alt Text](https://github.com/tomonarifeehan/Oasis/blob/master/oasis.gif)
 
 ## How to Run
 Clone the repository.</br>
